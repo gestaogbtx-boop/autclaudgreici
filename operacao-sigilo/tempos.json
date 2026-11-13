@@ -2,97 +2,31 @@
  {
   "cena": 1,
   "inicio": 0.0,
-  "fim": 7.22,
-  "texto": "Esse é o novo jeito de um hacker entrar na sua empresa... e você nem vai perceber."
+  "fim": 2.4,
+  "texto": "Esse é o novo jeito de um hacker invadir"
  },
  {
   "cena": 2,
-  "inicio": 7.22,
-  "fim": 10.12,
-  "texto": "Primeiro: o app feito na pressa."
+  "inicio": 2.4,
+  "fim": 4.3,
+  "texto": "Começa com um app feito na pressa"
  },
  {
   "cena": 3,
-  "inicio": 10.12,
-  "fim": 17.34,
-  "texto": "Muita gente cria app com inteligência artificial, publica no mesmo dia... e esquece de proteger o básico."
+  "inicio": 4.3,
+  "fim": 6.2,
+  "texto": "Publicado em minutos com IA"
  },
  {
   "cena": 4,
-  "inicio": 17.34,
-  "fim": 22.2,
-  "texto": "Resultado: senha exposta, banco de dados aberto, e qualquer um entra."
+  "inicio": 6.2,
+  "fim": 8.2,
+  "texto": "E sem proteção... qualquer um entra"
  },
  {
   "cena": 5,
-  "inicio": 22.2,
-  "fim": 25.5,
-  "texto": "Segundo golpe: a entrevista de emprego perfeita."
- },
- {
-  "cena": 6,
-  "inicio": 25.5,
-  "fim": 33.89,
-  "texto": "O recrutador sorri, a vaga paga muito bem... e pede só uma coisa: que você instale um programinha pra teste."
- },
- {
-  "cena": 7,
-  "inicio": 33.89,
-  "fim": 36.4,
-  "texto": "Esse programa é o vírus."
- },
- {
-  "cena": 8,
-  "inicio": 36.4,
-  "fim": 45.18,
-  "texto": "Terceiro: o pacote malicioso. Você copia um código da internet, cola no projeto... e ele leva junto uma porta dos fundos."
- },
- {
-  "cena": 9,
-  "inicio": 45.18,
-  "fim": 50.44,
-  "texto": "Em minutos, o hacker enxerga seus arquivos, suas senhas e seus clientes."
- },
- {
-  "cena": 10,
-  "inicio": 50.44,
-  "fim": 53.74,
-  "texto": "Tudo isso pode acontecer em poucos minutos."
- },
- {
-  "cena": 11,
-  "inicio": 53.74,
-  "fim": 57.03,
-  "texto": "Já a empresa... leva semanas pra perceber."
- },
- {
-  "cena": 12,
-  "inicio": 57.03,
-  "fim": 60.33,
-  "texto": "E como se proteger? Três regras simples."
- },
- {
-  "cena": 13,
-  "inicio": 60.33,
-  "fim": 64.4,
-  "texto": "Um: ative a verificação em duas etapas em tudo."
- },
- {
-  "cena": 14,
-  "inicio": 64.4,
-  "fim": 68.48,
-  "texto": "Dois: nunca instale nada que um desconhecido te mandar."
- },
- {
-  "cena": 15,
-  "inicio": 68.48,
-  "fim": 71.78,
-  "texto": "Três: revise todo código antes de colar."
- },
- {
-  "cena": 16,
-  "inicio": 71.78,
-  "fim": 79.78,
-  "texto": "Quer ficar um passo à frente? Segue a Operação Sigilo, que a gente te conta o que ninguém conta."
+  "inicio": 8.2,
+  "fim": 10.0,
+  "texto": "Ou numa entrevista de emprego falsa"
  }
 ]

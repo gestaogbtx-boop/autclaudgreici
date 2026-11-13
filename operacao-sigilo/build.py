@@ -29,23 +29,12 @@ def mf(s):
     return _fc[("m", s)]
 
 # ---------------------------------------------------------------- ROTEIRO
-SCENES = [
- ("alvo",    "Esse é o novo jeito de um *hacker* entrar na sua empresa... e você nem vai perceber.", "ALERTA"),
- ("app",     "Primeiro: o _app_ feito na pressa.", "01 / 03"),
- ("app2",    "Muita gente cria app com inteligência artificial, publica no mesmo dia... e esquece de proteger o básico.", "01 / 03"),
- ("cadeado", "Resultado: *senha exposta*, banco de dados aberto, e _qualquer um_ entra.", "01 / 03"),
- ("entrev",  "Segundo golpe: a _entrevista de emprego_ perfeita.", "02 / 03"),
- ("entrev2", "O recrutador sorri, a vaga paga muito bem... e pede só uma coisa: que você *instale um programinha* pra teste.", "02 / 03"),
- ("malic",   "Esse programa é o _vírus_.", "02 / 03"),
- ("codigo",  "Terceiro: o *pacote malicioso*. Você copia um código da internet, cola no projeto... e ele leva junto uma _porta dos fundos_.", "03 / 03"),
- ("arquivos","Em minutos, o hacker enxerga seus *arquivos*, suas *senhas* e seus *clientes*.", "03 / 03"),
- ("relogio", "Tudo isso pode acontecer em _poucos minutos_.", "TEMPO"),
- ("calend",  "Já a empresa... leva *semanas* pra perceber.", "TEMPO"),
- ("escudo",  "E como se proteger? *Três regras* simples.", "DEFESA"),
- ("celular", "Um: ative a _verificação em duas etapas_ em tudo.", "REGRA 1"),
- ("download","Dois: *nunca instale* nada que um desconhecido te mandar.", "REGRA 2"),
- ("lupa",    "Três: *revise* todo código antes de colar.", "REGRA 3"),
- ("cta",     "Quer ficar um passo à frente? Segue a *Operação Sigilo*, que a gente te conta o que _ninguém_ conta.", "SEGUE"),
+SCENES = [  # (cena, texto [| = quebra de linha], tag, duração s, velocidade da animação)
+ ("alvo",    "Esse é o novo jeito | de um *hacker* invadir", "", 2.4, 1.9),
+ ("app",     "Começa com um | _app_ feito na pressa", "", 1.9, 1.5),
+ ("app2",    "Publicado em | *minutos* com IA", "", 1.9, 2.4),
+ ("cadeado", "E *sem proteção*... | _qualquer um_ entra", "", 2.0, 1.3),
+ ("entrev",  "Ou numa _entrevista_ | de emprego *falsa*", "", 1.8, 1.2),
 ]
 WPS = 2.55
 IMPACTS = dict(alvo=[3.3], cadeado=[1.1], entrev=[1.3], entrev2=[1.3], malic=[.5], codigo=[3.4, 6.6], arquivos=[.4],
@@ -54,6 +43,7 @@ IMPACTS = dict(alvo=[3.3], cadeado=[1.1], entrev=[1.3], entrev2=[1.3], malic=[.5
 def parse(t):
     res, cur = [], WHITE
     for tok in t.split():
+        if tok == "|": res.append(("|", WHITE)); continue
         if tok[0] in "*_": cur = YEL if tok[0] == "*" else RED
         clean = tok.replace("*", "").replace("_", "")
         res.append((clean, cur))
@@ -61,10 +51,9 @@ def parse(t):
     return res
 
 timeline, t0 = [], 0.0
-for kind, text, tag in SCENES:
+for kind, text, tag, dur, speed in SCENES:
     words = parse(text)
-    dur = max(2.4, len(words) / WPS + 0.55)
-    timeline.append(dict(kind=kind, text=text, tag=tag, words=words, start=t0, dur=dur))
+    timeline.append(dict(kind=kind, text=text, tag=tag, words=words, start=t0, dur=dur, speed=speed))
     t0 += dur
 TOTAL = t0
 
@@ -597,7 +586,7 @@ SCENE_FN = dict(alvo=sc_alvo, app=sc_app, app2=sc_app2, cadeado=sc_cadeado, entr
                 download=sc_download, lupa=sc_lupa, cta=sc_cta)
 
 # ---------------------------------------------------------------- texto cinético (pop por palavra)
-FT = bf(58)
+FT = bf(52)
 _wc = {}
 def word_img(w, col):
     key = (w, col)
@@ -607,21 +596,20 @@ def word_img(w, col):
         _wc[key] = im
     return _wc[key]
 
-def layout(words, maxw=640):
-    lines, cur, cw = [], [], 0; sp = FT.getlength(" ")
-    for i, (w, c) in enumerate(words):
-        W_ = w.upper(); wl = FT.getlength(W_)
-        if cur and cw + sp + wl > maxw: lines.append(cur); cur, cw = [], 0
-        cur.append((i, W_, c, wl)); cw += wl + (sp if len(cur) > 1 else 0)
-    lines.append(cur); return lines
+def layout(words):
+    lines, cur, idx = [[]], 0, 0
+    for w, c in words:
+        if w == "|": lines.append([]); continue
+        lines[-1].append((idx, w.upper(), c, FT.getlength(w.upper()))); idx += 1
+    return lines
 
 def draw_text(frame, sc, lt):
-    words = sc["words"]; n = len(words); span = sc["dur"] - .7
-    lines = layout(words); y0 = 105 if len(lines) <= 4 else 85; lh = 72; sp = FT.getlength(" ")
+    words = [w for w in sc["words"] if w[0] != "|"]; n = len(words); span = sc["dur"] * .55
+    lines = layout(sc["words"]); y0 = 120; lh = 76; sp = FT.getlength(" ")
     for li, ln in enumerate(lines):
         tw = sum(x[3] for x in ln) + sp * (len(ln) - 1); x = (W - tw) / 2
         for (i, w, c, wl) in ln:
-            k = (lt - (.15 + span * i / n)) / .22
+            k = (lt - (.08 + span * i / n)) / .16
             if k > 0:
                 im = word_img(w, c); s = .45 + .55 * bk(k) if k < 1 else 1.0
                 if k < 1 and s != 1:
@@ -637,17 +625,14 @@ def hud(frame, sc, gt):
     d.text((24, 26), "// OPERAÇÃO SIGILO", font=HF, fill=BLUE2 + (255,))
     d.text((W - 24, 26), "● AO VIVO" if int(gt * 2) % 2 == 0 else "○ AO VIVO", font=HF, fill=RED + (255,), anchor="ra")
     for i, c in enumerate((BLUE, YEL, RED, WHITE)): d.rectangle((24 + i * 14, 56, 34 + i * 14, 62), fill=c + (255,))
-    d.text((24, H - 40), f"// {sc['tag']}", font=HF, fill=YEL + (255,))
-    d.text((W - 24, H - 40), f"{int(gt) // 60:02d}:{int(gt) % 60:02d}", font=HF, fill=WHITE + (200,), anchor="ra")
-    d.rectangle((0, H - 8, W, H - 4), fill=(20, 30, 80, 255)); d.rectangle((0, H - 8, W * gt / TOTAL, H - 4), fill=YEL + (255,))
 
-def camera(img, sc, lt, gt):
+def camera(img, sc, lt, gt, slt):
     """empurrão lento + tremor nos impactos."""
     zoom = 1 + .035 * lt / sc["dur"]; dx = dy = 0.0
     for ti in IMPACTS.get(sc["kind"], []):
-        if lt > ti:
-            a = 16 * math.exp(-(lt - ti) * 7)
-            dx += math.sin((lt - ti) * 95) * a; dy += math.cos((lt - ti) * 83) * a
+        if slt > ti:
+            a = 16 * math.exp(-(slt - ti) * 7 / sc["speed"])
+            dx += math.sin((slt - ti) * 95) * a; dy += math.cos((slt - ti) * 83) * a
     if zoom == 1 and dx == 0 and dy == 0: return img
     cx, cy = W / 2, H / 2
     return img.transform((W, H), Image.AFFINE, (1 / zoom, 0, cx - cx / zoom - dx / zoom, 0, 1 / zoom, cy - cy / zoom - dy / zoom), resample=Image.BILINEAR)
@@ -666,23 +651,23 @@ def render_frame(f):
     gt = f / FPS
     si = 0
     while si < len(timeline) - 1 and gt >= timeline[si + 1]["start"]: si += 1
-    sc = timeline[si]; lt = gt - sc["start"]
+    sc = timeline[si]; lt = gt - sc["start"]; slt = lt * sc["speed"]
     frame = BG.copy(); frame.alpha_composite(grid_layer(gt)); frame.alpha_composite(particles(gt))
     fx = dict(bolts=[], flash=None)
     stage = alpha_layer(); sd = ImageDraw.Draw(stage)
-    SCENE_FN[sc["kind"]](stage, sd, lt, gt, fx)
+    SCENE_FN[sc["kind"]](stage, sd, slt, gt, fx)
     ent = .9 + .1 * bk(lt / .35)
     size = int(SSZ * ent); stg = stage.resize((size, size), Image.BILINEAR)
     frame.alpha_composite(stg, (SX + (SSZ - size) // 2, SY + (SSZ - size) // 2))
     draw_bolts(frame, fx["bolts"])
     draw_text(frame, sc, lt)
-    frame = camera(frame, sc, lt, gt)
+    frame = camera(frame, sc, lt, gt, slt)
     frame.alpha_composite(VIGL); frame.alpha_composite(SCAN)
     if fx["flash"] and fx["flash"][1] > 0:
         c, a = fx["flash"]; frame.alpha_composite(Image.new("RGBA", (W, H), c + (min(255, int(a)),)))
     hud(frame, sc, gt)
     out = frame.convert("RGB")
-    if lt < .3: out = glitch(out, lt, gt)
+    if lt < .2: out = glitch(out, lt * 1.5, gt)
     if lt < .1: out = Image.blend(out, Image.new("RGB", (W, H), WHITE), .35 * (1 - lt / .1))
     if gt > TOTAL - .4: out = Image.blend(out, Image.new("RGB", (W, H), (0, 0, 0)), (gt - (TOTAL - .4)) / .4)
     return out.tobytes()
@@ -697,13 +682,13 @@ def main():
         for b in pool.imap(render_frame, range(nframes), chunksize=6): p.stdin.write(b)
     p.stdin.close(); p.wait()
     L = ["# ROTEIRO DE ÁUDIO – OPERAÇÃO SIGILO (voz: Elena)", "",
-         f"Duração alvo: {int(TOTAL // 60)}min{int(TOTAL % 60):02d}s  |  Ritmo: ~{WPS} palavras/s, tom firme, ritmo de notícia urgente", "",
+         f"Duração alvo: {int(TOTAL // 60)}min{int(TOTAL % 60):02d}s  |  Tom firme, ritmo de notícia urgente", "",
          "Leia cada bloco dentro da janela de tempo indicada. Pausas (...) = respiro de ~0,4 s.", ""]
     for i, s in enumerate(timeline, 1):
-        clean = s["text"].replace("*", "").replace("_", "")
-        L += [f"## Cena {i}  [{int(s['start'] // 60):02d}:{s['start'] % 60:04.1f} → {int((s['start'] + s['dur']) // 60):02d}:{(s['start'] + s['dur']) % 60:04.1f}]  ({s['tag']})", clean, ""]
+        clean = s["text"].replace("*", "").replace("_", "").replace(" | ", " ")
+        L += [f"## Cena {i}  [{s['start']:04.1f}s → {s['start'] + s['dur']:04.1f}s]", clean, ""]
     open(os.path.join(OUT, "roteiro-elena.md"), "w", encoding="utf-8").write("\n".join(L))
-    json.dump([dict(cena=i + 1, inicio=round(s["start"], 2), fim=round(s["start"] + s["dur"], 2), texto=s["text"].replace("*", "").replace("_", "")) for i, s in enumerate(timeline)],
+    json.dump([dict(cena=i + 1, inicio=round(s["start"], 2), fim=round(s["start"] + s["dur"], 2), texto=s["text"].replace("*", "").replace("_", "").replace(" | ", " ")) for i, s in enumerate(timeline)],
               open(os.path.join(OUT, "tempos.json"), "w"), ensure_ascii=False, indent=1)
     print("ok", round(TOTAL, 1), "s")
 
