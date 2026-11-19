@@ -30,11 +30,11 @@ def mf(s):
 
 # ---------------------------------------------------------------- ROTEIRO
 SCENES = [  # (cena, texto [| = quebra de linha], tag, duração s, velocidade da animação)
- ("alvo",    "Esse é o novo jeito | de um *hacker* invadir", "", 2.4, 1.9),
+ ("alvo",    "Esse é o novo jeito | de um *hacker* invadir", "", 2.5, 1.9),
  ("app",     "Começa com um | _app_ feito na pressa", "", 1.9, 1.5),
- ("app2",    "Publicado em | *minutos* com IA", "", 1.9, 2.4),
- ("cadeado", "E *sem proteção*... | _qualquer um_ entra", "", 2.0, 1.3),
- ("entrev",  "Ou numa _entrevista_ | de emprego *falsa*", "", 1.8, 1.2),
+ ("app2",    "Publicado em | *minutos* com IA", "", 1.85, 2.4),
+ ("cadeado", "E *sem proteção*... | _qualquer um_ entra", "", 1.85, 1.3),
+ ("entrev",  "Ou numa _entrevista_ | de emprego *falsa*", "", 2.09, 1.2),
 ]
 WPS = 2.55
 IMPACTS = dict(alvo=[3.3], cadeado=[1.1], entrev=[1.3], entrev2=[1.3], malic=[.5], codigo=[3.4, 6.6], arquivos=[.4],
@@ -681,6 +681,11 @@ def main():
     with Pool(4) as pool:
         for b in pool.imap(render_frame, range(nframes), chunksize=6): p.stdin.write(b)
     p.stdin.close(); p.wait()
+    aud = os.environ.get("AUDIO")
+    if aud:  # junta o áudio (voz da Elena) ao vídeo
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(OUT, "operacao-sigilo-SEM-AUDIO.mp4"), "-i", aud,
+                        "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest",
+                        os.path.join(OUT, "operacao-sigilo-COM-AUDIO.mp4")], check=True)
     L = ["# ROTEIRO DE ÁUDIO – OPERAÇÃO SIGILO (voz: Elena)", "",
          f"Duração alvo: {int(TOTAL // 60)}min{int(TOTAL % 60):02d}s  |  Tom firme, ritmo de notícia urgente", "",
          "Leia cada bloco dentro da janela de tempo indicada. Pausas (...) = respiro de ~0,4 s.", ""]

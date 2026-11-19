@@ -2,31 +2,31 @@
  {
   "cena": 1,
   "inicio": 0.0,
-  "fim": 2.4,
+  "fim": 2.5,
   "texto": "Esse é o novo jeito de um hacker invadir"
  },
  {
   "cena": 2,
-  "inicio": 2.4,
-  "fim": 4.3,
+  "inicio": 2.5,
+  "fim": 4.4,
   "texto": "Começa com um app feito na pressa"
  },
  {
   "cena": 3,
-  "inicio": 4.3,
-  "fim": 6.2,
+  "inicio": 4.4,
+  "fim": 6.25,
   "texto": "Publicado em minutos com IA"
  },
  {
   "cena": 4,
-  "inicio": 6.2,
-  "fim": 8.2,
+  "inicio": 6.25,
+  "fim": 8.1,
   "texto": "E sem proteção... qualquer um entra"
  },
  {
   "cena": 5,
-  "inicio": 8.2,
-  "fim": 10.0,
+  "inicio": 8.1,
+  "fim": 10.19,
   "texto": "Ou numa entrevista de emprego falsa"
  }
 ]
