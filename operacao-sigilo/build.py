@@ -4,7 +4,7 @@ Cada cena é desenhada quadro a quadro: personagens que se mexem, raios, interfa
 reagindo, tremor de câmera, glitch nas trocas de cena.
 Uso: python3 build.py            -> gera o MP4 + roteiro
      python3 build.py --test 3 12 40   -> salva PNGs desses instantes (segundos)"""
-import math, random, subprocess, os, json, sys
+import math, random, subprocess, os, json, sys, re
 import numpy as np
 from multiprocessing import Pool
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -1002,7 +1002,7 @@ def sc_pix(im, d, lt, gt, fx):
         t_ = (lt * .8 + i / 10) % 1
         if lt > 1.2: circ(d, 300 + (i - 5) * 50 * t_ * 1.5, 380 + oy + t_ * 160, 10, fill=RED + (int(255 * (1 - t_)),))
     t0 = cs_(fx, 0, 0.2); n = int(4000 * eo(ep(lt, t0, t0 + 1.4)))
-    txt(d, (300, 470 + oy), f"{n:,}".replace(",", "."), 90, RED); txt(d, (300, 540 + oy), "CHAVES PIX", 30, DARK)
+    txt(d, (300, 470 + oy), f"{n:,}".replace(",", "."), 90, YEL); txt(d, (300, 540 + oy), "CHAVES PIX", 30, WHITE)
 
 def sc_caixa(im, d, lt, gt, fx):
     k = appear(lt); oy = (1 - k) * 200
@@ -1139,6 +1139,10 @@ SCENE_FN = dict(alvo=sc_alvo, app=sc_app, app2=sc_app2, cadeado=sc_cadeado, entr
 
 # ---------------------------------------------------------------- texto cinético (pop por palavra)
 FT = bf(52)
+def wsyl(w):
+    w = w.lower().strip('.,:;!?…')
+    if w.isdigit(): return {'2026': 7, '2021': 7, '30': 2, '4': 2, '5': 2}.get(w, 3)
+    return max(1, len(re.findall(r'[aeiouáéíóúâêôãõà]+', w)))
 _wc = {}
 def word_img(w, col, shadow=True):
     key = (w, col, shadow)
@@ -1160,13 +1164,15 @@ def draw_text(frame, sc, gt, style="blue"):
     chs = sc["chunks"]; ch = [c for c in chs if c["start"] <= gt + 1e-6][-1] if gt >= chs[0]["start"] else chs[0]
     lt = gt - ch["start"]
     words = [w for w in ch["words"] if w[0] != "|"]; n = max(1, len(words)); span = min(ch["dur"] * .5, 1.0)
+    wsy = [wsyl(w) for w, _ in words]; tsy = max(1, sum(wsy)); cum = [sum(wsy[:i]) for i in range(len(wsy))]
+    ws0 = ch.get("wstart", ch["start"]); wd = ch.get("wdur", span)
     lines = layout(ch["words"]); sp = FT.getlength(" ")
     widths = [sum(x[3] for x in ln) + sp * max(0, len(ln) - 1) for ln in lines]
     fs = min(1.0, 650 / max(widths)); lh = 76 * fs; y0 = 125
     for li, ln in enumerate(lines):
         tw = widths[li] * fs; x = (W - tw) / 2
         for (i, w, c, wl) in ln:
-            k = (lt - (.04 + span * i / n)) / .16
+            k = (gt - (ws0 + wd * cum[i] / tsy - .04)) / .16
             if k > 0:
                 light = style in ("light", "yellow")
                 if light: c = {WHITE: DARK, YEL: BLUE}.get(c, c)
@@ -1233,8 +1239,8 @@ def stripes(t, col, alpha):
     return l
 STYLE = {}
 if "ataque" in CENAS:
-    STYLE = dict(contador5="red", calnov="light", mapabr="blue", mira="red", videos="blue", padrao="yellow", tesouro="blue", pix="light", caixa="light",
-                 petrobras="red", enem="light", porto="blue", cinco="yellow", investig="blue", porta="blue", trio="light", pastas="blue", cta="blue")
+    STYLE = dict(contador5="red", calnov="blue", mapabr="yellow", mira="red", videos="blue", padrao="yellow", tesouro="blue", pix="red", caixa="blue",
+                 petrobras="red", enem="yellow", porto="blue", cinco="yellow", investig="blue", porta="red", trio="yellow", pastas="blue", cta="blue")
 
 def render_frame(f):
     gt = f / FPS

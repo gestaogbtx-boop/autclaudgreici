@@ -6,14 +6,20 @@
   "chunks": [
    {
     "start": 0.0,
+    "wstart": 0.0,
+    "wdur": 2.11,
     "text": "Cinco ataques *hackers*"
    },
    {
-    "start": 2.0,
+    "start": 2.1,
+    "wstart": 2.16,
+    "wdur": 1.86,
     "text": "Em um único mês"
    },
    {
-    "start": 3.44,
+    "start": 4.01,
+    "wstart": 4.07,
+    "wdur": 1.83,
     "text": "E todos contra | alvos do *Brasil*"
    }
   ]
@@ -25,10 +31,14 @@
   "chunks": [
    {
     "start": 6.3,
+    "wstart": 6.69,
+    "wdur": 1.82,
     "text": "Em *novembro* de *2026*"
    },
    {
-    "start": 7.76,
+    "start": 8.5,
+    "wstart": 8.56,
+    "wdur": 2.29,
     "text": "o país viu uma sequência | que ninguém esperava"
    }
   ]
@@ -40,10 +50,14 @@
   "chunks": [
    {
     "start": 11.23,
+    "wstart": 11.58,
+    "wdur": 2.95,
     "text": "*Tesouro Nacional*, | Caixa Vida e Previdência"
    },
    {
-    "start": 14.68,
+    "start": 14.52,
+    "wstart": 14.58,
+    "wdur": 2.36,
     "text": "*Petrobras*, *Inep* | e o *Porto de Santos*"
    }
   ]
@@ -55,14 +69,20 @@
   "chunks": [
    {
     "start": 17.55,
+    "wstart": 17.83,
+    "wdur": 1.93,
     "text": "Dinheiro público, | previdência, energia"
    },
    {
-    "start": 19.96,
+    "start": 19.75,
+    "wstart": 19.81,
+    "wdur": 1.8,
     "text": "educação e comércio exterior..."
    },
    {
-    "start": 21.93,
+    "start": 21.6,
+    "wstart": 21.66,
+    "wdur": 0.74,
     "text": "todos _na mira_"
    }
   ]
@@ -74,14 +94,20 @@
   "chunks": [
    {
     "start": 22.75,
+    "wstart": 23.05,
+    "wdur": 2.51,
     "text": "Se você acompanhou | os vídeos da *Caixa*"
    },
    {
-    "start": 25.6,
+    "start": 25.55,
+    "wstart": 25.61,
+    "wdur": 1.99,
     "text": "e do *Porto* aqui no canal"
    },
    {
-    "start": 27.45,
+    "start": 27.59,
+    "wstart": 27.65,
+    "wdur": 1.35,
     "text": "já sabe como isso começa"
    }
   ]
@@ -93,10 +119,14 @@
   "chunks": [
    {
     "start": 29.3,
+    "wstart": 29.54,
+    "wdur": 2.49,
     "text": "Mas agora não é | mais um caso isolado"
    },
    {
-    "start": 32.06,
+    "start": 32.02,
+    "wstart": 32.08,
+    "wdur": 0.56,
     "text": "É um _padrão_"
    }
   ]
@@ -108,10 +138,14 @@
   "chunks": [
    {
     "start": 32.9,
+    "wstart": 33.13,
+    "wdur": 3.17,
     "text": "O ataque ao *Tesouro Nacional* | foi um dos mais graves"
    },
    {
-    "start": 36.62,
+    "start": 36.3,
+    "wstart": 36.36,
+    "wdur": 2.47,
     "text": "A invasão atingiu | *30 mil* cadastros"
    }
   ]
@@ -123,14 +157,20 @@
   "chunks": [
    {
     "start": 39.1,
+    "wstart": 39.14,
+    "wdur": 2.1,
     "text": "e *4 mil* chaves Pix"
    },
    {
-    "start": 40.44,
+    "start": 41.23,
+    "wstart": 41.29,
+    "wdur": 1.77,
     "text": "E uma chave Pix é | o *caminho direto*"
    },
    {
-    "start": 42.97,
+    "start": 43.05,
+    "wstart": 43.11,
+    "wdur": 1.34,
     "text": "até o *dinheiro* de alguém"
    }
   ]
@@ -142,6 +182,8 @@
   "chunks": [
    {
     "start": 44.75,
+    "wstart": 44.99,
+    "wdur": 2.6,
     "text": "A *Caixa Vida e Previdência* | também entrou na lista"
    }
   ]
@@ -153,14 +195,20 @@
   "chunks": [
    {
     "start": 47.87,
+    "wstart": 48.08,
+    "wdur": 1.43,
     "text": "E a *Petrobras*, uma das"
    },
    {
-    "start": 49.46,
+    "start": 49.5,
+    "wstart": 49.56,
+    "wdur": 1.12,
     "text": "maiores empresas do país"
    },
    {
-    "start": 51.19,
+    "start": 50.67,
+    "wstart": 50.73,
+    "wdur": 1.11,
     "text": "foi outro _alvo_"
    }
   ]
@@ -172,18 +220,26 @@
   "chunks": [
    {
     "start": 52.2,
+    "wstart": 52.42,
+    "wdur": 3.21,
     "text": "Teve ainda o *Inep*, | o órgão responsável pelo *Enem*"
    },
    {
-    "start": 55.74,
+    "start": 55.62,
+    "wstart": 55.68,
+    "wdur": 4.05,
     "text": "Houve *tentativas de ataque* | no segundo dia de provas"
    },
    {
-    "start": 59.5,
+    "start": 59.73,
+    "wstart": 59.79,
+    "wdur": 1.85,
     "text": "Em pleno dia de prova"
    },
    {
-    "start": 61.05,
+    "start": 61.62,
+    "wstart": 61.68,
+    "wdur": 2.42,
     "text": "com os candidatos dependendo | de tudo funcionar"
    }
   ]
@@ -195,14 +251,20 @@
   "chunks": [
    {
     "start": 64.44,
+    "wstart": 64.71,
+    "wdur": 2.07,
     "text": "E o quinto alvo | foi o *Porto de Santos*"
    },
    {
-    "start": 66.79,
+    "start": 66.78,
+    "wstart": 66.84,
+    "wdur": 2.58,
     "text": "por onde passa boa parte | do *comércio* do Brasil"
    },
    {
-    "start": 69.7,
+    "start": 69.41,
+    "wstart": 69.47,
+    "wdur": 0.69,
     "text": "com o mundo"
    }
   ]
@@ -214,14 +276,20 @@
   "chunks": [
    {
     "start": 70.4,
+    "wstart": 70.57,
+    "wdur": 1.22,
     "text": "*Cinco* alvos."
    },
    {
-    "start": 71.53,
+    "start": 71.78,
+    "wstart": 71.84,
+    "wdur": 2.05,
     "text": "*Cinco* setores diferentes."
    },
    {
-    "start": 73.87,
+    "start": 73.88,
+    "wstart": 73.94,
+    "wdur": 0.79,
     "text": "*Trinta* dias."
    }
   ]
@@ -233,22 +301,32 @@
   "chunks": [
    {
     "start": 75.0,
+    "wstart": 75.22,
+    "wdur": 1.12,
     "text": "_Coincidência?_"
    },
    {
-    "start": 75.89,
+    "start": 76.33,
+    "wstart": 76.39,
+    "wdur": 1.26,
     "text": "O que se sabe é que todos"
    },
    {
-    "start": 77.6,
+    "start": 77.64,
+    "wstart": 77.7,
+    "wdur": 2.2,
     "text": "aconteceram no mesmo *mês*"
    },
    {
-    "start": 79.24,
+    "start": 79.89,
+    "wstart": 79.95,
+    "wdur": 1.52,
     "text": "Se existe uma ligação entre eles"
    },
    {
-    "start": 81.43,
+    "start": 81.45,
+    "wstart": 81.51,
+    "wdur": 1.94,
     "text": "isso ainda precisa | ser *investigado*"
    }
   ]
@@ -260,14 +338,20 @@
   "chunks": [
    {
     "start": 83.75,
+    "wstart": 83.99,
+    "wdur": 1.8,
     "text": "Mas uma lição se repete:"
    },
    {
-    "start": 85.43,
+    "start": 85.79,
+    "wstart": 85.85,
+    "wdur": 3.12,
     "text": "os hackers não precisam | derrubar o país inteiro"
    },
    {
-    "start": 88.71,
+    "start": 88.96,
+    "wstart": 89.02,
+    "wdur": 1.6,
     "text": "Basta encontrar | uma *porta aberta*"
    }
   ]
@@ -279,14 +363,20 @@
   "chunks": [
    {
     "start": 90.95,
+    "wstart": 91.22,
+    "wdur": 1.2,
     "text": "Uma *senha fraca*"
    },
    {
-    "start": 92.12,
+    "start": 92.41,
+    "wstart": 92.47,
+    "wdur": 2.03,
     "text": "Um *sistema* sem atualização"
    },
    {
-    "start": 94.14,
+    "start": 94.49,
+    "wstart": 94.55,
+    "wdur": 1.14,
     "text": "Um *funcionário* distraído"
    }
   ]
@@ -298,10 +388,14 @@
   "chunks": [
    {
     "start": 96.0,
+    "wstart": 96.31,
+    "wdur": 1.93,
     "text": "Esse é só um dos | muitos *arquivos*"
    },
    {
-    "start": 98.26,
+    "start": 98.23,
+    "wstart": 98.29,
+    "wdur": 1.09,
     "text": "que abrimos por aqui"
    }
   ]
@@ -313,18 +407,26 @@
   "chunks": [
    {
     "start": 99.67,
+    "wstart": 99.91,
+    "wdur": 2.44,
     "text": "Se você gosta | desse tipo de conteúdo"
    },
    {
-    "start": 101.97,
+    "start": 102.33,
+    "wstart": 102.39,
+    "wdur": 1.73,
     "text": "*segue o Operação Sigilo*"
    },
    {
-    "start": 103.44,
+    "start": 104.11,
+    "wstart": 104.17,
+    "wdur": 2.5,
     "text": "e vem ver os *mistérios*, | as *operações secretas*"
    },
    {
-    "start": 106.32,
+    "start": 106.66,
+    "wstart": 106.72,
+    "wdur": 1.98,
     "text": "e os casos reais que | tentaram _esconder_"
    }
   ]
