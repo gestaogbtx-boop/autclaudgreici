@@ -189,7 +189,7 @@ Object.assign(CAST, {
 });
 // ---- animals (side view, facing right) ----
 export const ANIMALS = { lion: [320, 320, 306, 1.25, 216], giraffe: [320, 480, 466, 4.0, 416], elephant: [320, 320, 306, 2.7, 222], rabbit: [320, 320, 306, 0.55, 200], zebra: [320, 320, 306, 1.55, 232], sheep: [320, 320, 306, 0.95, 170], dove: [200, 140, 120, 0.45, 110] };
-function legs4(ctx, xs, top, bot, w, cols, step, lie) { if (lie) return; const d = Math.sin(step || 0) * 13; xs.forEach((x, i) => { const k = i % 2 ? -1 : 1; limb(ctx, [[x, top], [x + d * k, bot - 8 - Math.max(0, d * k) * 0.5]], w, cols[i % 2]); }); }
+function legs4(ctx, xs, top, bot, w, cols, step, lie) { if (lie) return; const d = Math.sin(step || 0) * 13; xs.forEach((x, i) => { const k = i % 2 ? -1 : 1; limb(ctx, [[x, top], [x + d * k, bot - w / 2 - 6 - Math.max(0, d * k) * 0.5]], w, cols[i % 2]); }); }
 function eye(ctx, x, y, closed, r = 8) { ctx.lineWidth = 5; ctx.strokeStyle = '#2b1630'; ctx.lineCap = 'round'; if (closed) { ctx.beginPath(); ctx.arc(x, y + 3, r, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); } else { ctx.beginPath(); ctx.ellipse(x, y, r * 0.85, r * 1.2, 0, 0, 7); ctx.fillStyle = '#2b1630'; ctx.fill(); ctx.beginPath(); ctx.arc(x + 2, y - 3, r * 0.35, 0, 7); ctx.fillStyle = '#fff'; ctx.fill(); } }
 export function drawAnimal(ctx, kind, p = {}) {
   const lie = !!p.sleep, cl = !!p.sleep || !!p.blink, st = p.step || 0;

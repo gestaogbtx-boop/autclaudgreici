@@ -30,3 +30,11 @@ Crianças 1,10 m; vovó 1,50 m; adultos 1,65 m; cachorro na cintura das criança
 `web/chars.js` agora também tem Noé e família, o povo, animais (`drawAnimal`: leão, girafa, elefante, coelho, zebra, ovelha, pomba),
 paleta do cachorro (`pal`) e piscadinha (`eyes: 'wink'`). As cenas de Noé trazem `makeArk`, `makeRainbow`, `makeRain`, `Crit` (animais) e a sala da vovó.
 Para rodar um exemplo, copie o `scenes.js` e o `audio.py` dele para `web/scenes.js` e `audio.py`, e use o `voice.mp3` da mesma pasta.
+
+## Regras para não ter objetos atravessando (aprendidas na Arca de Noé)
+- Personagem sentado: o cartão fica **na frente** da face frontal do assento, nunca dentro da caixa do móvel.
+- Caminhos de personagens contornam os móveis (andar pela frente, depois sentar); nunca interpolar em linha reta por dentro de sofá, bancada ou rampa.
+- Objeto empurrado ou segurado não ocupa o mesmo x/z do personagem; ferramentas ficam presas à mão com `actor.hand(cx, cy)`.
+- Animais largos entrando/saindo de portas usam `yaw: 0` e `alpha` (somem no escuro da porta) em vez de cruzar a parede.
+- Partículas (`Burst`) só são atualizadas na cena em que aparecem; esconder nas demais.
+- Conferir sempre uma folha densa de quadros (1 a cada ~1,5 s) antes de entregar.

@@ -62,6 +62,7 @@ export class Actor {
     this.blob.visible = m.visible && o.blob !== false; this.blob.position.set(x, (o.by ?? y) + 0.02, z); const bs = (this.dog ? 0.9 : 0.7) * (o.bs ?? 1); this.blob.scale.set(bs, 1, bs * 0.6);
   }
   hide() { this.card.mesh.visible = false; this.blob.visible = false; }
+  hand(cx, cy) { const m = this.card.mesh, a = m.rotation.y, d = (cx - 160) * this.unit * Math.sign(m.scale.x); return new THREE.Vector3(m.position.x + Math.cos(a) * d, m.position.y + (this.ch - cy) * this.unit * m.scale.y, m.position.z - Math.sin(a) * d + 0.04); }
 }
 // post: ink from depth + sky + grade
 const rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, depthTexture: new THREE.DepthTexture(W, H, THREE.UnsignedIntType) });
