@@ -2,67 +2,67 @@
  {
   "kind": "contador5",
   "start": 0.0,
-  "dur": 6.32,
+  "dur": 6.3,
   "chunks": [
    {
     "start": 0.0,
     "text": "Cinco ataques *hackers*"
    },
    {
-    "start": 2.01,
+    "start": 2.0,
     "text": "Em um único mês"
    },
    {
-    "start": 3.45,
+    "start": 3.44,
     "text": "E todos contra | alvos do *Brasil*"
    }
   ]
  },
  {
   "kind": "calnov",
-  "start": 6.32,
-  "dur": 4.92,
+  "start": 6.3,
+  "dur": 4.93,
   "chunks": [
    {
-    "start": 6.32,
+    "start": 6.3,
     "text": "Em *novembro* de *2026*"
    },
    {
-    "start": 7.78,
+    "start": 7.76,
     "text": "o país viu uma sequência | que ninguém esperava"
    }
   ]
  },
  {
   "kind": "mapabr",
-  "start": 11.24,
-  "dur": 3.18,
+  "start": 11.23,
+  "dur": 6.32,
   "chunks": [
    {
-    "start": 11.24,
+    "start": 11.23,
     "text": "*Tesouro Nacional*, | Caixa Vida e Previdência"
    },
    {
-    "start": 12.97,
+    "start": 14.68,
     "text": "*Petrobras*, *Inep* | e o *Porto de Santos*"
    }
   ]
  },
  {
   "kind": "mira",
-  "start": 14.42,
-  "dur": 8.34,
+  "start": 17.55,
+  "dur": 5.2,
   "chunks": [
    {
-    "start": 14.42,
+    "start": 17.55,
     "text": "Dinheiro público, | previdência, energia"
    },
    {
-    "start": 18.28,
+    "start": 19.96,
     "text": "educação e comércio exterior..."
    },
    {
-    "start": 21.43,
+    "start": 21.93,
     "text": "todos _na mira_"
    }
   ]
@@ -70,7 +70,7 @@
  {
   "kind": "videos",
   "start": 22.75,
-  "dur": 6.54,
+  "dur": 6.55,
   "chunks": [
    {
     "start": 22.75,
@@ -88,167 +88,167 @@
  },
  {
   "kind": "padrao",
-  "start": 29.29,
-  "dur": 2.5,
+  "start": 29.3,
+  "dur": 3.6,
   "chunks": [
    {
-    "start": 29.29,
+    "start": 29.3,
     "text": "Mas agora não é | mais um caso isolado"
    },
    {
-    "start": 31.21,
+    "start": 32.06,
     "text": "É um _padrão_"
    }
   ]
  },
  {
   "kind": "tesouro",
-  "start": 31.79,
-  "dur": 4.36,
+  "start": 32.9,
+  "dur": 6.2,
   "chunks": [
    {
-    "start": 31.79,
+    "start": 32.9,
     "text": "O ataque ao *Tesouro Nacional* | foi um dos mais graves"
    },
    {
-    "start": 34.41,
+    "start": 36.62,
     "text": "A invasão atingiu | *30 mil* cadastros"
    }
   ]
  },
  {
   "kind": "pix",
-  "start": 36.16,
-  "dur": 8.59,
+  "start": 39.1,
+  "dur": 5.65,
   "chunks": [
    {
-    "start": 36.16,
+    "start": 39.1,
     "text": "e *4 mil* chaves Pix"
    },
    {
-    "start": 38.19,
+    "start": 40.44,
     "text": "E uma chave Pix é | o *caminho direto*"
    },
    {
-    "start": 42.03,
+    "start": 42.97,
     "text": "até o *dinheiro* de alguém"
    }
   ]
  },
  {
   "kind": "caixa",
-  "start": 44.74,
+  "start": 44.75,
   "dur": 3.12,
   "chunks": [
    {
-    "start": 44.74,
+    "start": 44.75,
     "text": "A *Caixa Vida e Previdência* | também entrou na lista"
    }
   ]
  },
  {
   "kind": "petrobras",
-  "start": 47.86,
-  "dur": 4.3,
+  "start": 47.87,
+  "dur": 4.33,
   "chunks": [
    {
-    "start": 47.86,
+    "start": 47.87,
     "text": "E a *Petrobras*, uma das"
    },
    {
-    "start": 49.44,
+    "start": 49.46,
     "text": "maiores empresas do país"
    },
    {
-    "start": 51.15,
+    "start": 51.19,
     "text": "foi outro _alvo_"
    }
   ]
  },
  {
   "kind": "enem",
-  "start": 52.16,
-  "dur": 9.34,
+  "start": 52.2,
+  "dur": 12.24,
   "chunks": [
    {
-    "start": 52.16,
+    "start": 52.2,
     "text": "Teve ainda o *Inep*, | o órgão responsável pelo *Enem*"
    },
    {
-    "start": 54.86,
+    "start": 55.74,
     "text": "Houve *tentativas de ataque* | no segundo dia de provas"
    },
    {
-    "start": 57.73,
+    "start": 59.5,
     "text": "Em pleno dia de prova"
    },
    {
-    "start": 58.91,
+    "start": 61.05,
     "text": "com os candidatos dependendo | de tudo funcionar"
    }
   ]
  },
  {
   "kind": "porto",
-  "start": 61.49,
-  "dur": 8.9,
+  "start": 64.44,
+  "dur": 5.96,
   "chunks": [
    {
-    "start": 61.49,
+    "start": 64.44,
     "text": "E o quinto alvo | foi o *Porto de Santos*"
    },
    {
-    "start": 65.0,
+    "start": 66.79,
     "text": "por onde passa boa parte | do *comércio* do Brasil"
    },
    {
-    "start": 69.35,
+    "start": 69.7,
     "text": "com o mundo"
    }
   ]
  },
  {
   "kind": "cinco",
-  "start": 70.39,
-  "dur": 3.32,
+  "start": 70.4,
+  "dur": 4.6,
   "chunks": [
    {
-    "start": 70.39,
+    "start": 70.4,
     "text": "*Cinco* alvos."
    },
    {
-    "start": 71.2,
+    "start": 71.53,
     "text": "*Cinco* setores diferentes."
    },
    {
-    "start": 72.9,
+    "start": 73.87,
     "text": "*Trinta* dias."
    }
   ]
  },
  {
   "kind": "investig",
-  "start": 73.71,
-  "dur": 10.04,
+  "start": 75.0,
+  "dur": 8.75,
   "chunks": [
    {
-    "start": 73.71,
+    "start": 75.0,
     "text": "_Coincidência?_"
    },
    {
-    "start": 74.73,
+    "start": 75.89,
     "text": "O que se sabe é que todos"
    },
    {
-    "start": 76.69,
+    "start": 77.6,
     "text": "aconteceram no mesmo *mês*"
    },
    {
-    "start": 78.57,
+    "start": 79.24,
     "text": "Se existe uma ligação entre eles"
    },
    {
-    "start": 81.08,
+    "start": 81.43,
     "text": "isso ainda precisa | ser *investigado*"
    }
   ]
@@ -256,7 +256,7 @@
  {
   "kind": "porta",
   "start": 83.75,
-  "dur": 7.19,
+  "dur": 7.2,
   "chunks": [
    {
     "start": 83.75,
@@ -274,34 +274,34 @@
  },
  {
   "kind": "trio",
-  "start": 90.94,
-  "dur": 5.08,
+  "start": 90.95,
+  "dur": 5.05,
   "chunks": [
    {
-    "start": 90.94,
+    "start": 90.95,
     "text": "Uma *senha fraca*"
    },
    {
-    "start": 92.11,
+    "start": 92.12,
     "text": "Um *sistema* sem atualização"
    },
    {
-    "start": 94.15,
+    "start": 94.14,
     "text": "Um *funcionário* distraído"
    }
   ]
  },
  {
   "kind": "pastas",
-  "start": 96.02,
-  "dur": 3.65,
+  "start": 96.0,
+  "dur": 3.67,
   "chunks": [
    {
-    "start": 96.02,
+    "start": 96.0,
     "text": "Esse é só um dos | muitos *arquivos*"
    },
    {
-    "start": 98.27,
+    "start": 98.26,
     "text": "que abrimos por aqui"
    }
   ]
