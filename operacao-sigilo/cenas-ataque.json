@@ -1,0 +1,332 @@
+[
+ {
+  "kind": "contador5",
+  "start": 0.0,
+  "dur": 6.32,
+  "chunks": [
+   {
+    "start": 0.0,
+    "text": "Cinco ataques *hackers*"
+   },
+   {
+    "start": 2.01,
+    "text": "Em um único mês"
+   },
+   {
+    "start": 3.45,
+    "text": "E todos contra | alvos do *Brasil*"
+   }
+  ]
+ },
+ {
+  "kind": "calnov",
+  "start": 6.32,
+  "dur": 4.92,
+  "chunks": [
+   {
+    "start": 6.32,
+    "text": "Em *novembro* de *2026*"
+   },
+   {
+    "start": 7.78,
+    "text": "o país viu uma sequência | que ninguém esperava"
+   }
+  ]
+ },
+ {
+  "kind": "mapabr",
+  "start": 11.24,
+  "dur": 3.18,
+  "chunks": [
+   {
+    "start": 11.24,
+    "text": "*Tesouro Nacional*, | Caixa Vida e Previdência"
+   },
+   {
+    "start": 12.97,
+    "text": "*Petrobras*, *Inep* | e o *Porto de Santos*"
+   }
+  ]
+ },
+ {
+  "kind": "mira",
+  "start": 14.42,
+  "dur": 8.34,
+  "chunks": [
+   {
+    "start": 14.42,
+    "text": "Dinheiro público, | previdência, energia"
+   },
+   {
+    "start": 18.28,
+    "text": "educação e comércio exterior..."
+   },
+   {
+    "start": 21.43,
+    "text": "todos _na mira_"
+   }
+  ]
+ },
+ {
+  "kind": "videos",
+  "start": 22.75,
+  "dur": 6.54,
+  "chunks": [
+   {
+    "start": 22.75,
+    "text": "Se você acompanhou | os vídeos da *Caixa*"
+   },
+   {
+    "start": 25.6,
+    "text": "e do *Porto* aqui no canal"
+   },
+   {
+    "start": 27.45,
+    "text": "já sabe como isso começa"
+   }
+  ]
+ },
+ {
+  "kind": "padrao",
+  "start": 29.29,
+  "dur": 2.5,
+  "chunks": [
+   {
+    "start": 29.29,
+    "text": "Mas agora não é | mais um caso isolado"
+   },
+   {
+    "start": 31.21,
+    "text": "É um _padrão_"
+   }
+  ]
+ },
+ {
+  "kind": "tesouro",
+  "start": 31.79,
+  "dur": 4.36,
+  "chunks": [
+   {
+    "start": 31.79,
+    "text": "O ataque ao *Tesouro Nacional* | foi um dos mais graves"
+   },
+   {
+    "start": 34.41,
+    "text": "A invasão atingiu | *30 mil* cadastros"
+   }
+  ]
+ },
+ {
+  "kind": "pix",
+  "start": 36.16,
+  "dur": 8.59,
+  "chunks": [
+   {
+    "start": 36.16,
+    "text": "e *4 mil* chaves Pix"
+   },
+   {
+    "start": 38.19,
+    "text": "E uma chave Pix é | o *caminho direto*"
+   },
+   {
+    "start": 42.03,
+    "text": "até o *dinheiro* de alguém"
+   }
+  ]
+ },
+ {
+  "kind": "caixa",
+  "start": 44.74,
+  "dur": 3.12,
+  "chunks": [
+   {
+    "start": 44.74,
+    "text": "A *Caixa Vida e Previdência* | também entrou na lista"
+   }
+  ]
+ },
+ {
+  "kind": "petrobras",
+  "start": 47.86,
+  "dur": 4.3,
+  "chunks": [
+   {
+    "start": 47.86,
+    "text": "E a *Petrobras*, uma das"
+   },
+   {
+    "start": 49.44,
+    "text": "maiores empresas do país"
+   },
+   {
+    "start": 51.15,
+    "text": "foi outro _alvo_"
+   }
+  ]
+ },
+ {
+  "kind": "enem",
+  "start": 52.16,
+  "dur": 9.34,
+  "chunks": [
+   {
+    "start": 52.16,
+    "text": "Teve ainda o *Inep*, | o órgão responsável pelo *Enem*"
+   },
+   {
+    "start": 54.86,
+    "text": "Houve *tentativas de ataque* | no segundo dia de provas"
+   },
+   {
+    "start": 57.73,
+    "text": "Em pleno dia de prova"
+   },
+   {
+    "start": 58.91,
+    "text": "com os candidatos dependendo | de tudo funcionar"
+   }
+  ]
+ },
+ {
+  "kind": "porto",
+  "start": 61.49,
+  "dur": 8.9,
+  "chunks": [
+   {
+    "start": 61.49,
+    "text": "E o quinto alvo | foi o *Porto de Santos*"
+   },
+   {
+    "start": 65.0,
+    "text": "por onde passa boa parte | do *comércio* do Brasil"
+   },
+   {
+    "start": 69.35,
+    "text": "com o mundo"
+   }
+  ]
+ },
+ {
+  "kind": "cinco",
+  "start": 70.39,
+  "dur": 3.32,
+  "chunks": [
+   {
+    "start": 70.39,
+    "text": "*Cinco* alvos."
+   },
+   {
+    "start": 71.2,
+    "text": "*Cinco* setores diferentes."
+   },
+   {
+    "start": 72.9,
+    "text": "*Trinta* dias."
+   }
+  ]
+ },
+ {
+  "kind": "investig",
+  "start": 73.71,
+  "dur": 10.04,
+  "chunks": [
+   {
+    "start": 73.71,
+    "text": "_Coincidência?_"
+   },
+   {
+    "start": 74.73,
+    "text": "O que se sabe é que todos"
+   },
+   {
+    "start": 76.69,
+    "text": "aconteceram no mesmo *mês*"
+   },
+   {
+    "start": 78.57,
+    "text": "Se existe uma ligação entre eles"
+   },
+   {
+    "start": 81.08,
+    "text": "isso ainda precisa | ser *investigado*"
+   }
+  ]
+ },
+ {
+  "kind": "porta",
+  "start": 83.75,
+  "dur": 7.19,
+  "chunks": [
+   {
+    "start": 83.75,
+    "text": "Mas uma lição se repete:"
+   },
+   {
+    "start": 85.43,
+    "text": "os hackers não precisam | derrubar o país inteiro"
+   },
+   {
+    "start": 88.71,
+    "text": "Basta encontrar | uma *porta aberta*"
+   }
+  ]
+ },
+ {
+  "kind": "trio",
+  "start": 90.94,
+  "dur": 5.08,
+  "chunks": [
+   {
+    "start": 90.94,
+    "text": "Uma *senha fraca*"
+   },
+   {
+    "start": 92.11,
+    "text": "Um *sistema* sem atualização"
+   },
+   {
+    "start": 94.15,
+    "text": "Um *funcionário* distraído"
+   }
+  ]
+ },
+ {
+  "kind": "pastas",
+  "start": 96.02,
+  "dur": 3.65,
+  "chunks": [
+   {
+    "start": 96.02,
+    "text": "Esse é só um dos | muitos *arquivos*"
+   },
+   {
+    "start": 98.27,
+    "text": "que abrimos por aqui"
+   }
+  ]
+ },
+ {
+  "kind": "cta",
+  "start": 99.67,
+  "dur": 9.08,
+  "chunks": [
+   {
+    "start": 99.67,
+    "text": "Se você gosta | desse tipo de conteúdo"
+   },
+   {
+    "start": 101.97,
+    "text": "*segue o Operação Sigilo*"
+   },
+   {
+    "start": 103.44,
+    "text": "e vem ver os *mistérios*, | as *operações secretas*"
+   },
+   {
+    "start": 106.32,
+    "text": "e os casos reais que | tentaram _esconder_"
+   }
+  ]
+ }
+]

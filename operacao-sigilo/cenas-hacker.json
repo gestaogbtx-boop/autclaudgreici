@@ -1,0 +1,178 @@
+[
+ {
+  "kind": "alvo",
+  "start": 0.0,
+  "dur": 2.79,
+  "chunks": [
+   {
+    "start": 0.0,
+    "text": "Esse é o novo jeito | de um *hacker* invadir"
+   }
+  ]
+ },
+ {
+  "kind": "app",
+  "start": 2.79,
+  "dur": 2.38,
+  "chunks": [
+   {
+    "start": 2.79,
+    "text": "Começa com um | _app_ feito na pressa"
+   }
+  ]
+ },
+ {
+  "kind": "app2",
+  "start": 5.17,
+  "dur": 2.37,
+  "chunks": [
+   {
+    "start": 5.17,
+    "text": "Publicado em | *minutos* com IA"
+   }
+  ]
+ },
+ {
+  "kind": "cadeado",
+  "start": 7.54,
+  "dur": 2.83,
+  "chunks": [
+   {
+    "start": 7.54,
+    "text": "E *sem proteção*... | _qualquer um_ entra"
+   }
+  ]
+ },
+ {
+  "kind": "entrev",
+  "start": 10.37,
+  "dur": 2.5,
+  "chunks": [
+   {
+    "start": 10.37,
+    "text": "Ou numa _entrevista_ | de emprego *falsa*"
+   }
+  ]
+ },
+ {
+  "kind": "entrev2",
+  "start": 12.87,
+  "dur": 2.6,
+  "chunks": [
+   {
+    "start": 12.87,
+    "text": "O recrutador pede | que você *instale* algo"
+   }
+  ]
+ },
+ {
+  "kind": "malic",
+  "start": 15.47,
+  "dur": 2.03,
+  "chunks": [
+   {
+    "start": 15.47,
+    "text": "Esse programa é o | _vírus_"
+   }
+  ]
+ },
+ {
+  "kind": "codigo",
+  "start": 17.5,
+  "dur": 2.8,
+  "chunks": [
+   {
+    "start": 17.5,
+    "text": "Você copia um código | e cola no projeto"
+   }
+  ]
+ },
+ {
+  "kind": "arquivos",
+  "start": 20.3,
+  "dur": 3.0,
+  "chunks": [
+   {
+    "start": 20.3,
+    "text": "Vê seus *arquivos*, | *senhas* e *clientes*"
+   }
+  ]
+ },
+ {
+  "kind": "relogio",
+  "start": 23.3,
+  "dur": 2.1,
+  "chunks": [
+   {
+    "start": 23.3,
+    "text": "Tudo isso em | _poucos minutos_"
+   }
+  ]
+ },
+ {
+  "kind": "calend",
+  "start": 25.4,
+  "dur": 2.57,
+  "chunks": [
+   {
+    "start": 25.4,
+    "text": "A empresa leva | *semanas* pra perceber"
+   }
+  ]
+ },
+ {
+  "kind": "escudo",
+  "start": 27.97,
+  "dur": 2.47,
+  "chunks": [
+   {
+    "start": 27.97,
+    "text": "Como se proteger? | *Três regras*"
+   }
+  ]
+ },
+ {
+  "kind": "celular",
+  "start": 30.44,
+  "dur": 2.73,
+  "chunks": [
+   {
+    "start": 30.44,
+    "text": "Um: verificação | em _duas etapas_"
+   }
+  ]
+ },
+ {
+  "kind": "download",
+  "start": 33.17,
+  "dur": 3.5,
+  "chunks": [
+   {
+    "start": 33.17,
+    "text": "Dois: *nunca instale* | nada de desconhecidos"
+   }
+  ]
+ },
+ {
+  "kind": "lupa",
+  "start": 36.67,
+  "dur": 3.38,
+  "chunks": [
+   {
+    "start": 36.67,
+    "text": "Três: *revise* todo | código antes de colar"
+   }
+  ]
+ },
+ {
+  "kind": "cta",
+  "start": 40.05,
+  "dur": 3.5,
+  "chunks": [
+   {
+    "start": 40.05,
+    "text": "*Operação Sigilo* | segue e fique _à frente_"
+   }
+  ]
+ }
+]

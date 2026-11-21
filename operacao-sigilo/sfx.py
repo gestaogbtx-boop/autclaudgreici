@@ -87,13 +87,13 @@ mix = norm(bed, .30) + norm(fx, .55) * 1.0
 mix = np.clip(mix, -1, 1)
 st = np.stack([mix, np.roll(mix, 40)], 1)  # leve largura estéreo
 pcm = (st * 32767).astype(np.int16)
-wp = os.path.join(OUT, "audio", "trilha-sfx.wav")
+wp = os.path.join(OUT, "audio", "trilha-sfx-" + B.PREFIX + ".wav")
 with wave.open(wp, "wb") as w:
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR); w.writeframes(pcm.tobytes())
 
-voice = os.path.join(OUT, "audio", "narracao-v5.mp3")
-vid = os.path.join(OUT, "operacao-sigilo-COM-AUDIO.mp4")
-final = os.path.join(OUT, "operacao-sigilo-FINAL.mp4")
+voice = os.environ.get("VOICE", os.path.join(OUT, "audio", "narracao-v5.mp3"))
+vid = os.path.join(OUT, B.PREFIX + "-COM-AUDIO.mp4")
+final = os.path.join(OUT, B.PREFIX + "-FINAL.mp4")
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", vid, "-i", voice, "-i", wp, "-filter_complex",
     "[1:a]loudnorm=I=-16:TP=-1.5:LRA=7,aformat=sample_rates=44100:channel_layouts=stereo,asplit=2[v1][v2];"
     "[2:a]volume=0.55[m];[m][v2]sidechaincompress=threshold=0.015:ratio=8:attack=15:release=350:makeup=1[md];"

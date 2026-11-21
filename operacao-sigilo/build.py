@@ -45,12 +45,14 @@ def parse(t):
         if tok.rstrip(".,:!?")[-1:] in "*_": cur = WHITE
     return res
 
+CENAS = os.environ.get("CENAS", "cenas.json"); PREFIX = os.environ.get("PREFIX", "operacao-sigilo")
+ORIG = dict(alvo=(2.5, 1.9), app=(2.0, 1.5), app2=(1.85, 2.4), cadeado=(2.2, 1.3), entrev=(2.2, 1.2), entrev2=(3.0, 2.3), malic=(2.0, 1.0), codigo=(3.0, 2.4), arquivos=(3.0, 1.5), relogio=(2.0, 1.0), calend=(2.5, 1.1), escudo=(2.2, 1.2), celular=(3.0, 1.5), download=(3.0, 1.2), lupa=(3.0, 1.3), cta=(5.0, 1.2))
 timeline, t0 = [], 0.0
-for c in json.load(open(os.path.join(OUT, "cenas.json"))):
+for c in json.load(open(os.path.join(OUT, CENAS))):
     chs = c["chunks"]; end = c["start"] + c["dur"]
     for i, ch in enumerate(chs):
         ch["dur"] = (chs[i + 1]["start"] if i + 1 < len(chs) else end) - ch["start"]; ch["words"] = parse(ch["text"])
-    timeline.append(dict(kind=c["kind"], tag="", words=chs[0]["words"], chunks=chs, start=c["start"], dur=c["dur"], speed=SPEED.get(c["kind"], 1.0)))
+    timeline.append(dict(kind=c["kind"], tag="", words=chs[0]["words"], chunks=chs, start=c["start"], dur=c["dur"], speed=(max(.6, min(3.0, ORIG[c["kind"]][1] * ORIG[c["kind"]][0] / c["dur"])) if "hacker" in CENAS and c["kind"] in ORIG else SPEED.get(c["kind"], 1.0))))
     t0 = end
 TOTAL = t0
 
@@ -962,16 +964,16 @@ def main():
     nframes = int(TOTAL * FPS)
     cmd = ["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
            "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-           os.path.join(OUT, "operacao-sigilo-SEM-AUDIO.mp4")]
+           os.path.join(OUT, PREFIX + "-SEM-AUDIO.mp4")]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     with Pool(4) as pool:
         for b in pool.imap(render_frame, range(nframes), chunksize=6): p.stdin.write(b)
     p.stdin.close(); p.wait()
     aud = os.environ.get("AUDIO")
     if aud:  # junta o áudio (voz da Elena) ao vídeo
-        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(OUT, "operacao-sigilo-SEM-AUDIO.mp4"), "-i", aud,
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(OUT, PREFIX + "-SEM-AUDIO.mp4"), "-i", aud,
                         "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest",
-                        os.path.join(OUT, "operacao-sigilo-COM-AUDIO.mp4")], check=True)
+                        os.path.join(OUT, PREFIX + "-COM-AUDIO.mp4")], check=True)
     print("ok", round(TOTAL, 1), "s")
 
 if __name__ == "__main__":

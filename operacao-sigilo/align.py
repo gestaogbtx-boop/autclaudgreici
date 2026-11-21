@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Alinha o roteiro v5 ao áudio da narração (por pausas) e gera cenas.py."""
 import subprocess, re, json, sys, os
-AUDIO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "audio", "narracao-v5.mp3")
+HERE = os.path.dirname(os.path.abspath(__file__))
+AUDIO = os.environ.get("VOICE", os.path.join(HERE, "audio", "narracao-v5.mp3"))
+CENAS_OUT = os.environ.get("CENAS", "cenas.json")
 
 # (cena, [textos na tela: '|' quebra linha, *amarelo*, _vermelho_]) – um item por frase falada
-ROT = [
+ROT_V5 = [
  ("calmar",  ["Março de | *2024*"]),
  ("login",   ["Um engenheiro percebe | que o login no computador", "dele está *meio segundo* | mais lento", "Só isso."]),
  ("ataque",  ["E essa pequena lentidão | evitou o que poderia", "ter sido um dos | *maiores ataques*", "da história da internet"]),
@@ -27,10 +29,50 @@ ROT = [
  ("pastas",  ["Esse é só um dos | muitos *arquivos*", "que abrimos por aqui"]),
  ("cta",     ["Se você gosta | desse conteúdo", "*segue o Operação Sigilo*", "e vem ver os *mistérios*, | as *operações secretas*", "e casos reais que | tentaram _esconder_"]),
 ]
+ROT_ATAQUE = [
+ ("contador5",["Cinco ataques *hackers*", "Em um único mês", "E todos contra | alvos do *Brasil*"]),
+ ("calnov",   ["Em *novembro* de *2026*", "o país viu uma sequência | que ninguém esperava"]),
+ ("mapabr",   ["*Tesouro Nacional*, | Caixa Vida e Previdência", "*Petrobras*, *Inep* | e o *Porto de Santos*"]),
+ ("mira",     ["Dinheiro público, | previdência, energia", "educação e comércio exterior...", "todos _na mira_"]),
+ ("videos",   ["Se você acompanhou | os vídeos da *Caixa*", "e do *Porto* aqui no canal", "já sabe como isso começa"]),
+ ("padrao",   ["Mas agora não é | mais um caso isolado", "É um _padrão_"]),
+ ("tesouro",  ["O ataque ao *Tesouro Nacional* | foi um dos mais graves", "A invasão atingiu | *30 mil* cadastros"]),
+ ("pix",      ["e *4 mil* chaves Pix", "E uma chave Pix é | o *caminho direto*", "até o *dinheiro* de alguém"]),
+ ("caixa",    ["A *Caixa Vida e Previdência* | também entrou na lista"]),
+ ("petrobras",["E a *Petrobras*, uma das", "maiores empresas do país", "foi outro _alvo_"]),
+ ("enem",     ["Teve ainda o *Inep*, | o órgão responsável pelo *Enem*", "Houve *tentativas de ataque* | no segundo dia de provas", "Em pleno dia de prova", "com os candidatos dependendo | de tudo funcionar"]),
+ ("porto",    ["E o quinto alvo | foi o *Porto de Santos*", "por onde passa boa parte | do *comércio* do Brasil", "com o mundo"]),
+ ("cinco",    ["*Cinco* alvos.", "*Cinco* setores diferentes.", "*Trinta* dias."]),
+ ("investig", ["_Coincidência?_", "O que se sabe é que todos", "aconteceram no mesmo *mês*", "Se existe uma ligação entre eles", "isso ainda precisa | ser *investigado*"]),
+ ("porta",    ["Mas uma lição se repete:", "os hackers não precisam | derrubar o país inteiro", "Basta encontrar | uma *porta aberta*"]),
+ ("trio",     ["Uma *senha fraca*", "Um *sistema* sem atualização", "Um *funcionário* distraído"]),
+ ("pastas",   ["Esse é só um dos | muitos *arquivos*", "que abrimos por aqui"]),
+ ("cta",      ["Se você gosta | desse tipo de conteúdo", "*segue o Operação Sigilo*", "e vem ver os *mistérios*, | as *operações secretas*", "e os casos reais que | tentaram _esconder_"]),
+]
+ROT_HACKER = [
+ ("alvo",    ["Esse é o novo jeito | de um *hacker* invadir"]),
+ ("app",     ["Começa com um | _app_ feito na pressa"]),
+ ("app2",    ["Publicado em | *minutos* com IA"]),
+ ("cadeado", ["E *sem proteção*... | _qualquer um_ entra"]),
+ ("entrev",  ["Ou numa _entrevista_ | de emprego *falsa*"]),
+ ("entrev2", ["O recrutador pede | que você *instale* algo"]),
+ ("malic",   ["Esse programa é o | _vírus_"]),
+ ("codigo",  ["Você copia um código | e cola no projeto"]),
+ ("arquivos",["Vê seus *arquivos*, | *senhas* e *clientes*"]),
+ ("relogio", ["Tudo isso em | _poucos minutos_"]),
+ ("calend",  ["A empresa leva | *semanas* pra perceber"]),
+ ("escudo",  ["Como se proteger? | *Três regras*"]),
+ ("celular", ["Um: verificação | em _duas etapas_"]),
+ ("download",["Dois: *nunca instale* | nada de desconhecidos"]),
+ ("lupa",    ["Três: *revise* todo | código antes de colar"]),
+ ("cta",     ["*Operação Sigilo* | segue e fique _à frente_"]),
+]
+ROT = {"ataque": ROT_ATAQUE, "hacker": ROT_HACKER}.get(os.environ.get("ROTEIRO"), ROT_V5)
+BONUS = float(os.environ.get('BONUS', '0'))
 def clean(t): return re.sub(r"[*_|]", "", t).replace("  ", " ").strip()
 
 def silences():
-    out = subprocess.run(["ffmpeg", "-v", "info", "-i", AUDIO, "-af", "silencedetect=noise=-33dB:d=0.3", "-f", "null", "-"], capture_output=True, text=True).stderr
+    out = subprocess.run(["ffmpeg", "-v", "info", "-i", AUDIO, "-af", "silencedetect=noise=-33dB:d=" + os.environ.get("SILD", "0.3"), "-f", "null", "-"], capture_output=True, text=True).stderr
     st = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", out)]
     en = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", out)]
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", AUDIO]))
@@ -53,6 +95,7 @@ def main():
     cum = [sum(chars[:i + 1]) for i in range(len(chars))]
     pred = [abs_from_speech(c / cum[-1] * total_speech) for c in cum[:-1]]  # fim previsto de cada cena (exceto a última)
     mids = [(a + b) / 2 for a, b in sil]
+    sdur = [b - a for a, b in sil]
     n, m = len(pred), len(mids)
     INF = 1e9
     dp = [[INF] * (m + 1) for _ in range(n + 1)]; bp = [[0] * (m + 1) for _ in range(n + 1)]
@@ -62,11 +105,15 @@ def main():
             best, arg = INF, 0
             for k in range(i - 1, j):
                 if dp[i - 1][k] < best: best, arg = dp[i - 1][k], k
-            dp[i][j] = best + abs(pred[i - 1] - mids[j - 1]) ** 1.5; bp[i][j] = arg
-    j = min(range(n, m + 1), key=lambda j: dp[n][j]); cuts = []
+            dp[i][j] = best + abs(pred[i - 1] - mids[j - 1]) ** 1.5 - BONUS * sdur[j - 1]; bp[i][j] = arg
+    if os.environ.get('CUTS'): dp[n][n] = 0
+    j = min(range(n, m + 1), key=lambda j: dp[n][j]) if m >= n else n; cuts = []
     for i in range(n, 0, -1):
         cuts.append(mids[j - 1]); j = bp[i][j]
     cuts = cuts[::-1]
+    if os.environ.get("CUTS"):  # cortes manuais (fim de cada cena, exceto a última)
+        cuts = [float(x) for x in os.environ["CUTS"].split(",")]
+        assert len(cuts) == len(ROT) - 1, (len(cuts), len(ROT) - 1)
     bounds = [0.0] + cuts + [dur]
     cenas = []
     for idx, (kind, chunks) in enumerate(ROT):
@@ -76,5 +123,5 @@ def main():
             chs.append(dict(start=round(s + (e - s) * acc / tot, 2), text=t)); acc += c
         cenas.append(dict(kind=kind, start=round(s, 2), dur=round(e - s, 2), chunks=chs))
         print(f"{idx+1:2d} {kind:9s} {s:6.1f}-{e:6.1f} ({e-s:4.1f}s) pred_end={pred[idx] if idx < n else dur:6.1f}  {clean(chunks[0])[:40]}")
-    json.dump(cenas, open(os.path.join(os.path.dirname(AUDIO), "..", "cenas.json"), "w"), ensure_ascii=False, indent=1)
+    json.dump(cenas, open(os.path.join(HERE, CENAS_OUT), "w"), ensure_ascii=False, indent=1)
 if __name__ == "__main__": main()
