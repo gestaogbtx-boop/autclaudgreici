@@ -31,10 +31,21 @@ def mf(s):
 # ---------------------------------------------------------------- ROTEIRO
 SCENES = [  # (cena, texto [| = quebra de linha], tag, duração s, velocidade da animação)
  ("alvo",    "Esse é o novo jeito | de um *hacker* invadir", "", 2.5, 1.9),
- ("app",     "Começa com um | _app_ feito na pressa", "", 1.9, 1.5),
- ("app2",    "Publicado em | *minutos* com IA", "", 1.85, 2.4),
- ("cadeado", "E *sem proteção*... | _qualquer um_ entra", "", 1.85, 1.3),
- ("entrev",  "Ou numa _entrevista_ | de emprego *falsa*", "", 2.09, 1.2),
+ ("app",     "Começa com um | _app_ feito na pressa", "", 2.0, 1.5),
+ ("app2",    "Publicado em | *minutos* com IA", "", 1.9, 2.4),
+ ("cadeado", "E *sem proteção*... | _qualquer um_ entra", "", 2.2, 1.3),
+ ("entrev",  "Ou numa _entrevista_ | de emprego *falsa*", "", 2.2, 1.2),
+ ("entrev2", "O recrutador pede | que você *instale* algo", "", 3.0, 2.3),
+ ("malic",   "Esse programa é o | _vírus_", "", 2.0, 1.0),
+ ("codigo",  "Você copia um código | e cola no projeto", "", 3.0, 2.4),
+ ("arquivos","Vê seus *arquivos*, | *senhas* e *clientes*", "", 3.0, 1.5),
+ ("relogio", "Tudo isso em | _poucos minutos_", "", 2.0, 1.0),
+ ("calend",  "A empresa leva | *semanas* pra perceber", "", 2.5, 1.1),
+ ("escudo",  "Como se proteger? | *Três regras*", "", 2.2, 1.2),
+ ("celular", "Um: verificação | em _duas etapas_", "", 3.0, 1.5),
+ ("download","Dois: *nunca instale* | nada de desconhecidos", "", 3.0, 1.2),
+ ("lupa",    "Três: *revise* todo | código antes de colar", "", 3.0, 1.3),
+ ("cta",     "*Operação Sigilo* | segue e fique _à frente_", "", 5.0, 1.2),
 ]
 WPS = 2.55
 IMPACTS = dict(alvo=[3.3], cadeado=[1.1], entrev=[1.3], entrev2=[1.3], malic=[.5], codigo=[3.4, 6.6], arquivos=[.4],
@@ -692,7 +703,7 @@ def main():
     for i, s in enumerate(timeline, 1):
         clean = s["text"].replace("*", "").replace("_", "").replace(" | ", " ")
         L += [f"## Cena {i}  [{s['start']:04.1f}s → {s['start'] + s['dur']:04.1f}s]", clean, ""]
-    open(os.path.join(OUT, "roteiro-elena.md"), "w", encoding="utf-8").write("\n".join(L))
+    open(os.path.join(OUT, "roteiro-elena-v4.md"), "w", encoding="utf-8").write("\n".join(L))
     json.dump([dict(cena=i + 1, inicio=round(s["start"], 2), fim=round(s["start"] + s["dur"], 2), texto=s["text"].replace("*", "").replace("_", "").replace(" | ", " ")) for i, s in enumerate(timeline)],
               open(os.path.join(OUT, "tempos.json"), "w"), ensure_ascii=False, indent=1)
     print("ok", round(TOTAL, 1), "s")

@@ -8,25 +8,91 @@
  {
   "cena": 2,
   "inicio": 2.5,
-  "fim": 4.4,
+  "fim": 4.5,
   "texto": "Começa com um app feito na pressa"
  },
  {
   "cena": 3,
-  "inicio": 4.4,
-  "fim": 6.25,
+  "inicio": 4.5,
+  "fim": 6.4,
   "texto": "Publicado em minutos com IA"
  },
  {
   "cena": 4,
-  "inicio": 6.25,
-  "fim": 8.1,
+  "inicio": 6.4,
+  "fim": 8.6,
   "texto": "E sem proteção... qualquer um entra"
  },
  {
   "cena": 5,
-  "inicio": 8.1,
-  "fim": 10.19,
+  "inicio": 8.6,
+  "fim": 10.8,
   "texto": "Ou numa entrevista de emprego falsa"
+ },
+ {
+  "cena": 6,
+  "inicio": 10.8,
+  "fim": 13.8,
+  "texto": "O recrutador pede que você instale algo"
+ },
+ {
+  "cena": 7,
+  "inicio": 13.8,
+  "fim": 15.8,
+  "texto": "Esse programa é o vírus"
+ },
+ {
+  "cena": 8,
+  "inicio": 15.8,
+  "fim": 18.8,
+  "texto": "Você copia um código e cola no projeto"
+ },
+ {
+  "cena": 9,
+  "inicio": 18.8,
+  "fim": 21.8,
+  "texto": "Vê seus arquivos, senhas e clientes"
+ },
+ {
+  "cena": 10,
+  "inicio": 21.8,
+  "fim": 23.8,
+  "texto": "Tudo isso em poucos minutos"
+ },
+ {
+  "cena": 11,
+  "inicio": 23.8,
+  "fim": 26.3,
+  "texto": "A empresa leva semanas pra perceber"
+ },
+ {
+  "cena": 12,
+  "inicio": 26.3,
+  "fim": 28.5,
+  "texto": "Como se proteger? Três regras"
+ },
+ {
+  "cena": 13,
+  "inicio": 28.5,
+  "fim": 31.5,
+  "texto": "Um: verificação em duas etapas"
+ },
+ {
+  "cena": 14,
+  "inicio": 31.5,
+  "fim": 34.5,
+  "texto": "Dois: nunca instale nada de desconhecidos"
+ },
+ {
+  "cena": 15,
+  "inicio": 34.5,
+  "fim": 37.5,
+  "texto": "Três: revise todo código antes de colar"
+ },
+ {
+  "cena": 16,
+  "inicio": 37.5,
+  "fim": 42.5,
+  "texto": "Operação Sigilo segue e fique à frente"
  }
 ]
