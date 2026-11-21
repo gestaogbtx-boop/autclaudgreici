@@ -25,3 +25,8 @@ Música e efeitos são sintetizados e ficam a 50% do volume da voz.
 
 ## Padrões do elenco
 Crianças 1,10 m; vovó 1,50 m; adultos 1,65 m; cachorro na cintura das crianças. Barco de 4,6 m; peixe de 28 m.
+
+## Exemplo 2: A Arca de Noé (`exemplos/noe/`)
+`web/chars.js` agora também tem Noé e família, o povo, animais (`drawAnimal`: leão, girafa, elefante, coelho, zebra, ovelha, pomba),
+paleta do cachorro (`pal`) e piscadinha (`eyes: 'wink'`). As cenas de Noé trazem `makeArk`, `makeRainbow`, `makeRain`, `Crit` (animais) e a sala da vovó.
+Para rodar um exemplo, copie o `scenes.js` e o `audio.py` dele para `web/scenes.js` e `audio.py`, e use o `voice.mp3` da mesma pasta.
