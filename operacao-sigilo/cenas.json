@@ -1,0 +1,373 @@
+[
+ {
+  "kind": "calmar",
+  "start": 0.0,
+  "dur": 2.28,
+  "chunks": [
+   {
+    "start": 0.0,
+    "text": "Março de | *2024*"
+   }
+  ]
+ },
+ {
+  "kind": "login",
+  "start": 2.28,
+  "dur": 5.37,
+  "chunks": [
+   {
+    "start": 2.28,
+    "text": "Um engenheiro percebe | que o login no computador"
+   },
+   {
+    "start": 5.15,
+    "text": "dele está *meio segundo* | mais lento"
+   },
+   {
+    "start": 7.16,
+    "text": "Só isso."
+   }
+  ]
+ },
+ {
+  "kind": "ataque",
+  "start": 7.65,
+  "dur": 7.67,
+  "chunks": [
+   {
+    "start": 7.65,
+    "text": "E essa pequena lentidão | evitou o que poderia"
+   },
+   {
+    "start": 11.1,
+    "text": "ter sido um dos | *maiores ataques*"
+   },
+   {
+    "start": 13.52,
+    "text": "da história da internet"
+   }
+  ]
+ },
+ {
+  "kind": "engenh",
+  "start": 15.33,
+  "dur": 3.97,
+  "chunks": [
+   {
+    "start": 15.33,
+    "text": "O engenheiro se chamava | *Andres Freund*"
+   },
+   {
+    "start": 17.69,
+    "text": "e trabalhava | na *Microsoft*"
+   }
+  ]
+ },
+ {
+  "kind": "cpu",
+  "start": 19.29,
+  "dur": 7.76,
+  "chunks": [
+   {
+    "start": 19.29,
+    "text": "Ele testava um sistema Linux"
+   },
+   {
+    "start": 22.19,
+    "text": "quando notou que o *SSH* | gastava mais processador"
+   }
+  ]
+ },
+ {
+  "kind": "lupa",
+  "start": 27.05,
+  "dur": 8.25,
+  "chunks": [
+   {
+    "start": 27.05,
+    "text": "Foi puxando o fio..."
+   },
+   {
+    "start": 28.73,
+    "text": "e encontrou *código escondido*"
+   },
+   {
+    "start": 31.09,
+    "text": "num programa que quase | ninguém conhece: o *XZ Utils*"
+   }
+  ]
+ },
+ {
+  "kind": "compacta",
+  "start": 35.3,
+  "dur": 3.66,
+  "chunks": [
+   {
+    "start": 35.3,
+    "text": "O XZ é uma ferramenta | simples"
+   },
+   {
+    "start": 37.42,
+    "text": "de *compactar* arquivos"
+   }
+  ]
+ },
+ {
+  "kind": "servidor",
+  "start": 38.96,
+  "dur": 8.26,
+  "chunks": [
+   {
+    "start": 38.96,
+    "text": "Mas está dentro de boa | parte dos sistemas *Linux*"
+   },
+   {
+    "start": 42.46,
+    "text": "inclusive nos servidores | que sustentam *bancos*"
+   },
+   {
+    "start": 45.81,
+    "text": "empresas e *governos*"
+   }
+  ]
+ },
+ {
+  "kind": "porta",
+  "start": 47.22,
+  "dur": 8.19,
+  "chunks": [
+   {
+    "start": 47.22,
+    "text": "E o código criava | uma _porta dos fundos_"
+   },
+   {
+    "start": 50.53,
+    "text": "quem tivesse | a *chave certa*"
+   },
+   {
+    "start": 52.8,
+    "text": "entraria sem | precisar de senha"
+   }
+  ]
+ },
+ {
+  "kind": "ampulh",
+  "start": 55.41,
+  "dur": 4.9,
+  "chunks": [
+   {
+    "start": 55.41,
+    "text": "Só que ninguém invadiu nada."
+   },
+   {
+    "start": 57.52,
+    "text": "Quem planejou isso | jogou o _jogo longo_"
+   }
+  ]
+ },
+ {
+  "kind": "commits",
+  "start": 60.31,
+  "dur": 10.27,
+  "chunks": [
+   {
+    "start": 60.31,
+    "text": "Um desenvolvedor | chamado *Jia Tan*"
+   },
+   {
+    "start": 63.6,
+    "text": "apareceu no projeto | por volta de *2021*"
+   },
+   {
+    "start": 67.4,
+    "text": "ajudando com | pequenas correções"
+   }
+  ]
+ },
+ {
+  "kind": "confianca",
+  "start": 70.58,
+  "dur": 3.52,
+  "chunks": [
+   {
+    "start": 70.58,
+    "text": "Educado, constante, | sempre útil"
+   },
+   {
+    "start": 71.93,
+    "text": "E durante quase | *dois anos*..."
+   },
+   {
+    "start": 73.15,
+    "text": "foi ganhando _confiança_"
+   }
+  ]
+ },
+ {
+  "kind": "esgotado",
+  "start": 74.11,
+  "dur": 6.82,
+  "chunks": [
+   {
+    "start": 74.11,
+    "text": "O criador do XZ, | *Lasse Collin*"
+   },
+   {
+    "start": 76.82,
+    "text": "mantinha o projeto sozinho | e estava _esgotado_"
+   }
+  ]
+ },
+ {
+  "kind": "pressao",
+  "start": 80.93,
+  "dur": 6.99,
+  "chunks": [
+   {
+    "start": 80.93,
+    "text": "Contas estranhas | começaram a pressioná-lo"
+   },
+   {
+    "start": 84.08,
+    "text": "cobrando atualizações"
+   },
+   {
+    "start": 85.69,
+    "text": "e pedindo um | *novo responsável*"
+   }
+  ]
+ },
+ {
+  "kind": "chave",
+  "start": 87.92,
+  "dur": 6.07,
+  "chunks": [
+   {
+    "start": 87.92,
+    "text": "Ele cedeu."
+   },
+   {
+    "start": 88.79,
+    "text": "E deu a *Jia Tan* | o poder de *publicar*"
+   },
+   {
+    "start": 91.82,
+    "text": "novas versões | do programa"
+   }
+  ]
+ },
+ {
+  "kind": "testes",
+  "start": 93.99,
+  "dur": 14.06,
+  "chunks": [
+   {
+    "start": 93.99,
+    "text": "Foi aí que | o plano andou."
+   },
+   {
+    "start": 96.35,
+    "text": "O código foi escondido | em *arquivos de teste*"
+   },
+   {
+    "start": 100.4,
+    "text": "e entrou nas versões | *5.6.0* e *5.6.1*"
+   },
+   {
+    "start": 103.61,
+    "text": "Alguns sistemas Linux | já tinham começado a usar"
+   }
+  ]
+ },
+ {
+  "kind": "mapa",
+  "start": 108.05,
+  "dur": 5.27,
+  "chunks": [
+   {
+    "start": 108.05,
+    "text": "Se ninguém tivesse notado..."
+   },
+   {
+    "start": 109.91,
+    "text": "a porta dos fundos chegaria | a _milhões de servidores_"
+   }
+  ]
+ },
+ {
+  "kind": "relogio2",
+  "start": 113.31,
+  "dur": 6.59,
+  "chunks": [
+   {
+    "start": 113.31,
+    "text": "Mas os atacantes erraram | em um detalhe"
+   },
+   {
+    "start": 116.37,
+    "text": "o código era pesado demais. | Por *meio segundo*"
+   }
+  ]
+ },
+ {
+  "kind": "misterio",
+  "start": 119.9,
+  "dur": 10.78,
+  "chunks": [
+   {
+    "start": 119.9,
+    "text": "Até hoje, ninguém sabe | quem é *Jia Tan*"
+   },
+   {
+    "start": 122.9,
+    "text": "O nome provavelmente | é falso"
+   },
+   {
+    "start": 125.17,
+    "text": "Alguns suspeitam de um | grupo apoiado por governo"
+   },
+   {
+    "start": 129.06,
+    "text": "Mas _nada_ foi provado"
+   }
+  ]
+ },
+ {
+  "kind": "pastas",
+  "start": 130.68,
+  "dur": 3.45,
+  "chunks": [
+   {
+    "start": 130.68,
+    "text": "Esse é só um dos | muitos *arquivos*"
+   },
+   {
+    "start": 132.81,
+    "text": "que abrimos por aqui"
+   }
+  ]
+ },
+ {
+  "kind": "cta",
+  "start": 134.14,
+  "dur": 9.36,
+  "chunks": [
+   {
+    "start": 134.14,
+    "text": "Se você gosta | desse conteúdo"
+   },
+   {
+    "start": 136.14,
+    "text": "*segue o Operação Sigilo*"
+   },
+   {
+    "start": 137.78,
+    "text": "e vem ver os *mistérios*, | as *operações secretas*"
+   },
+   {
+    "start": 140.99,
+    "text": "e casos reais que | tentaram _esconder_"
+   }
+  ]
+ }
+]

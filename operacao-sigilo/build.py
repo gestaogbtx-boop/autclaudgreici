@@ -29,26 +29,10 @@ def mf(s):
     return _fc[("m", s)]
 
 # ---------------------------------------------------------------- ROTEIRO
-SCENES = [  # (cena, texto [| = quebra de linha], tag, duração s, velocidade da animação)
- ("alvo",    "Esse é o novo jeito | de um *hacker* invadir", "", 2.5, 1.9),
- ("app",     "Começa com um | _app_ feito na pressa", "", 2.0, 1.5),
- ("app2",    "Publicado em | *minutos* com IA", "", 1.9, 2.4),
- ("cadeado", "E *sem proteção*... | _qualquer um_ entra", "", 2.2, 1.3),
- ("entrev",  "Ou numa _entrevista_ | de emprego *falsa*", "", 2.2, 1.2),
- ("entrev2", "O recrutador pede | que você *instale* algo", "", 3.0, 2.3),
- ("malic",   "Esse programa é o | _vírus_", "", 2.0, 1.0),
- ("codigo",  "Você copia um código | e cola no projeto", "", 3.0, 2.4),
- ("arquivos","Vê seus *arquivos*, | *senhas* e *clientes*", "", 3.0, 1.5),
- ("relogio", "Tudo isso em | _poucos minutos_", "", 2.0, 1.0),
- ("calend",  "A empresa leva | *semanas* pra perceber", "", 2.5, 1.1),
- ("escudo",  "Como se proteger? | *Três regras*", "", 2.2, 1.2),
- ("celular", "Um: verificação | em _duas etapas_", "", 3.0, 1.5),
- ("download","Dois: *nunca instale* | nada de desconhecidos", "", 3.0, 1.2),
- ("lupa",    "Três: *revise* todo | código antes de colar", "", 3.0, 1.3),
- ("cta",     "*Operação Sigilo* | segue e fique _à frente_", "", 5.0, 1.2),
-]
+SCENES = []
 WPS = 2.55
-IMPACTS = dict(alvo=[3.3], cadeado=[1.1], entrev=[1.3], entrev2=[1.3], malic=[.5], codigo=[3.4, 6.6], arquivos=[.4],
+SPEED = dict(lupa=.55, cta=.9, relogio2=1.0)
+IMPACTS = dict(porta=[3.0], chave=[3.0], testes=[4.2, 5.0], misterio=[], ataque=[2.8], relogio2=[.2], calmar=[1.2], alvo=[3.3], cadeado=[1.1], entrev=[1.3], entrev2=[1.3], malic=[.5], codigo=[3.4, 6.6], arquivos=[.4],
                relogio=[.2], calend=[1.9], escudo=[.5], download=[1.2], cta=[4.4], app=[1.6], app2=[.3])
 
 def parse(t):
@@ -62,10 +46,12 @@ def parse(t):
     return res
 
 timeline, t0 = [], 0.0
-for kind, text, tag, dur, speed in SCENES:
-    words = parse(text)
-    timeline.append(dict(kind=kind, text=text, tag=tag, words=words, start=t0, dur=dur, speed=speed))
-    t0 += dur
+for c in json.load(open(os.path.join(OUT, "cenas.json"))):
+    chs = c["chunks"]; end = c["start"] + c["dur"]
+    for i, ch in enumerate(chs):
+        ch["dur"] = (chs[i + 1]["start"] if i + 1 < len(chs) else end) - ch["start"]; ch["words"] = parse(ch["text"])
+    timeline.append(dict(kind=c["kind"], tag="", words=chs[0]["words"], chunks=chs, start=c["start"], dur=c["dur"], speed=SPEED.get(c["kind"], 1.0)))
+    t0 = end
 TOTAL = t0
 
 # ---------------------------------------------------------------- utilidades de animação
@@ -557,7 +543,7 @@ def sc_lupa(im, d, lt, gt, fx):
     if hit > 0:
         sz = bk((lt - 1.9) / .35)
         poly(d, [(mx, my - 55 * sz), (mx + 50 * sz, my + 40 * sz), (mx - 50 * sz, my + 40 * sz)], RED, WHITE, 3); txt(d, (mx, my + 14), "!", int(44 * sz) + 1, WHITE)
-        txt(d, (300, 540), "CÓDIGO SUSPEITO", 32, RED if int(gt * 4) % 2 == 0 else WHITE)
+        txt(d, (300, 540), "CÓDIGO ESCONDIDO" if fx.get('dur', 0) > 6 else "CÓDIGO SUSPEITO", 32, RED if int(gt * 4) % 2 == 0 else WHITE)
         if lt < 2.4: fx["flash"] = (YEL, int(90 * (1 - ep(lt, 1.9, 2.4))))
 
 def sc_cta(im, d, lt, gt, fx):
@@ -592,9 +578,294 @@ def sc_cta(im, d, lt, gt, fx):
         r = t_ * 350; circ(d2, 300, 367 + oy, r, outline=YEL + (int(255 * max(0, 1 - r / 200)),), w=4)
     c = eo(ep(lt, 2.8, 4.25)); cursor(d2, 540 - 200 * c, 560 - 190 * c, press) if lt > 2.8 and lt < 5.2 else None
 
+# ================================================================ CENAS DO V5 (caso XZ Utils)
+def appear(lt, t0=0.0, d_=.4): return bk((lt - t0) / d_)
+def heart(d, x, y, r, col):
+    circ(d, x - r * .5, y, r * .55, fill=col); circ(d, x + r * .5, y, r * .55, fill=col)
+    poly(d, [(x - r * 1.0, y + r * .15), (x + r * 1.0, y + r * .15), (x, y + r * 1.15)], col)
+def tired_face(d, cx, cy, r, gt, slump=0):
+    cy += math.sin(gt * 1.6) * 5 + slump
+    circ(d, cx, cy, r, fill=SKIN, outline=BLUE2, w=4)
+    for ex in (-r * .36, r * .36):
+        ell(d, (cx + ex - r * .2, cy + r * .12, cx + ex + r * .2, cy + r * .3), fill=(120, 140, 200))
+        line(d, [(cx + ex - r * .18, cy - r * .05), (cx + ex + r * .18, cy - r * .02)], DARK, max(3, r * .06))
+    line(d, [(cx - r * .25, cy + r * .5), (cx + r * .25, cy + r * .46)], DARK, max(3, r * .06))
+    d.pieslice(P(cx - r, cy - r, cx + r, cy + r * .1), 180, 360, fill=(30, 40, 90))
+def stamp(im, text, size, cx, cy, k, rot=-10, col=RED, w=420, h=100):
+    st = alpha_layer(); sd = ImageDraw.Draw(st); sc_ = 1 + (1 - k) * 1.5
+    rr(sd, (cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2), 12, col + (240,), WHITE, 6); txt(sd, (cx, cy), text, size, WHITE)
+    st = st.rotate(rot, resample=Image.BICUBIC, center=(cx * S, cy * S))
+    if sc_ != 1:
+        ns = int(600 * S * sc_); st2 = st.resize((ns, ns), Image.BICUBIC); o = (ns - 600 * S) // 2
+        st = st2.crop((o, o, o + 600 * S, o + 600 * S))
+    im.alpha_composite(st)
+
+def sc_calmar(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 220
+    rr(d, (110, 70 + oy, 490, 510 + oy), 24, WHITE); rr(d, (110, 70 + oy, 490, 170 + oy), 24, RED); d.rectangle(P(110, 130 + oy, 490, 170 + oy), fill=RED)
+    txt(d, (300, 120 + oy), "MARÇO", 48, WHITE)
+    pr = ep(lt, .2, 1.2); yr = 2020 + int(4 * eo(pr)) if pr < 1 else 2024
+    sq = 1 - .3 * abs(math.sin(pr * 4 * math.pi)) if 0 < pr < 1 else 1
+    txt(d, (300, 330 + oy), str(yr), int(150 * sq) + 1, DARK if pr < 1 else RED)
+    for x in (170, 430): rr(d, (x - 14, 48 + oy, x + 14, 100 + oy), 8, BLUE2)
+    if lt > 1.2: r = (lt - 1.2) * 450; circ(d, 300, 300, r, outline=RED + (int(255 * max(0, 1 - r / 300)),), w=5)
+
+def sc_login(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 200
+    rr(d, (60, 60 + oy, 540, 400 + oy), 18, (14, 22, 60), BLUE2, 4); rr(d, (80, 80 + oy, 520, 380 + oy), 8, (10, 26, 90))
+    poly(d, [(30, 400 + oy), (570, 400 + oy), (550, 425 + oy), (50, 425 + oy)], (24, 36, 90), BLUE2, 2)
+    circ(d, 300, 150 + oy, 34, fill=SKIN); circ(d, 300, 142 + oy, 12, fill=DARK); d.pieslice(P(262, 168 + oy, 338, 240 + oy), 180, 360, fill=SKIN)
+    rr(d, (190, 235 + oy, 410, 270 + oy), 10, (6, 12, 40), BLUE2, 2)
+    n = min(8, max(0, int((lt - .6) * 6)))
+    for i in range(n): circ(d, 215 + i * 24, 252 + oy, 6, fill=WHITE)
+    if lt < 1.8: rr(d, (225, 295 + oy, 375, 345 + oy), 22, YEL); txt(d, (300, 320 + oy), "ENTRAR", 24, DARK)
+    else:
+        a = (gt * 420) % 360; d.arc(P(272, 292 + oy, 328, 348 + oy), a, a + 250, fill=YEL, width=8 * S)
+    v = min(.5, max(0.0, (lt - 1.8) * .25)) if lt > 1.8 else 0.0
+    txt(d, (300, 490 + oy), f"{v:.1f} s".replace(".", ","), 84, RED if v >= .45 else YEL)
+    if v >= .5 and int(gt * 3) % 2 == 0: txt(d, (300, 555 + oy), "MAIS LENTO QUE O NORMAL", 20, RED, mono=True)
+
+def sc_ataque(im, d, lt, gt, fx):
+    rnd = random.Random(6); nodes = [(300 + rnd.uniform(-240, 240), 300 + rnd.uniform(-240, 240)) for _ in range(30)]
+    R = min(lt * 120, 380) if lt < 2.8 else max(0, 380 - (lt - 2.8) * 520)
+    inf = [math.hypot(x - 300, y - 300) < R for x, y in nodes]
+    for i, (x, y) in enumerate(nodes):
+        for j in (i + 1, i + 2, i + 5):
+            if j < len(nodes): line(d, [(x, y), nodes[j]], (RED if inf[i] and inf[j] else BLUE) + (110,), 2)
+    for i, (x, y) in enumerate(nodes): circ(d, x, y, 10 + 3 * pulse(gt * 2 + i, 1.2), fill=RED if inf[i] else BLUE2)
+    if lt > 2.8:
+        sz = appear(lt, 2.8, .45)
+        poly(d, [(300, 90 + 210 * (1 - sz)), (450, 150), (440, 330), (300, 490 - 0), (160, 330), (150, 150)] if sz > .99 else
+             [(300 + (x - 300) * sz, 300 + (y - 300) * sz) for x, y in [(300, 90), (450, 150), (440, 330), (300, 490), (160, 330), (150, 150)]], BLUE, YEL, 8)
+        line(d, [(240 * sz + 300 * (1 - sz), 300), (285 * sz + 300 * (1 - sz), 350 * sz + 300 * (1 - sz) * 0 + 0), (365 * sz + 300 * (1 - sz), 250)], WHITE, 26) if False else None
+        line(d, [(300 + (-70) * sz, 300 + 10 * sz), (300 + (-20) * sz, 300 + 60 * sz), (300 + 75 * sz, 300 - 45 * sz)], WHITE, 26 * sz)
+    else: circ(d, 300, 300, 20 + 6 * pulse(gt, 3), fill=RED)
+
+def sc_engenh(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 220
+    poly(d, [(110, 560 + oy), (150, 400 + oy), (450, 400 + oy), (490, 560 + oy)], BLUE, WHITE, 3)
+    poly(d, [(270, 400 + oy), (330, 400 + oy), (300, 450 + oy)], WHITE)
+    circ(d, 300, 290 + oy, 100, fill=SKIN, outline=BLUE2, w=4)
+    d.pieslice(P(200, 190 + oy, 400, 330 + oy), 180, 360, fill=(40, 28, 20))
+    blink = (lt % 2.5) < .12
+    for ex in (-38, 38):
+        circ(d, 300 + ex, 285 + oy, 26, outline=WHITE, w=4)
+        if blink: line(d, [(300 + ex - 12, 285 + oy), (300 + ex + 12, 285 + oy)], DARK, 4)
+        else: circ(d, 300 + ex + math.sin(gt) * 4, 285 + oy, 7, fill=DARK)
+    line(d, [(326, 285 + oy), (274, 285 + oy)], WHITE, 4)
+    d.arc(P(260, 310 + oy, 340, 360 + oy), 20, 160, fill=DARK, width=5 * S)
+    rr(d, (190, 440 + oy, 410, 540 + oy), 10, (12, 22, 64), BLUE2, 3); circ(d, 300, 490 + oy, 14, fill=YEL + (int(180 + 70 * pulse(gt, 2)),))
+    b1 = appear(lt, .8); rr(d, (330 - (1 - b1) * 300, 40, 570 - (1 - b1) * 300, 100), 12, WHITE); txt(d, (450 - (1 - b1) * 300, 70), "ANDRES FREUND", 22, DARK)
+    b2 = appear(lt, 2.2)
+    if b2 > 0: rr(d, (30 - (1 - b2) * 300, 110, 270 - (1 - b2) * 300, 168), 12, BLUE, WHITE, 3); txt(d, (150 - (1 - b2) * 300, 139), "MICROSOFT", 24, WHITE)
+
+def sc_cpu(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 160
+    rr(d, (40, 60 + oy, 560, 270 + oy), 14, (6, 12, 40), BLUE2, 3); rr(d, (40, 60 + oy, 560, 90 + oy), 14, (14, 28, 80)); txt(d, (300, 75 + oy), "terminal — ssh", 14, BLUE2, mono=True)
+    lines_ = ["$ ssh servidor", "autenticando...", "conectado.", "$ _"]
+    for i, l in enumerate(lines_):
+        n = int(len(l) * cl((lt - .4 - i * .6) / .5))
+        if n > 0: txt(d, (62, 112 + oy + i * 34), l[:n], 22, YEL if i in (0, 3) else WHITE, mono=True, anchor="lm")
+    rr(d, (40, 300 + oy, 560, 540 + oy), 14, (8, 14, 44), BLUE2, 3); txt(d, (300, 322 + oy), "USO DE PROCESSADOR", 18, BLUE2, mono=True)
+    rnd = random.Random(9)
+    for i in range(12):
+        base = 30 + rnd.randint(0, 25); grow = ep(lt, 1.0 + (i - 5) * .25, 1.6 + (i - 5) * .25) if i >= 5 else 0
+        h_ = base + 150 * eo(grow); col = RED if grow > .3 else BLUE2
+        rr(d, (70 + i * 40, 520 + oy - h_, 98 + i * 40, 520 + oy), 4, col)
+    for x in range(60, 540, 24): line(d, [(x, 440 + oy), (x + 12, 440 + oy)], YEL + (200,), 2)
+    txt(d, (520, 428 + oy), "normal", 14, YEL, mono=True, anchor="rm")
+
+def sc_compacta(im, d, lt, gt, fx):
+    ph = []
+    for i in range(3):
+        t_ = (lt * .7 + i / 3) % 1; x0, y0 = (90, 300, 510)[i], 70 + 40 * (i % 2)
+        e = t_ ** 2; x = x0 + (300 - x0) * e; y = y0 + (330 - y0) * e; sc_ = 1 - .8 * e
+        c = (YEL, BLUE2, WHITE)[i]
+        rr(d, (x - 45 * sc_, y - 55 * sc_, x + 45 * sc_, y + 55 * sc_), 8, c); line(d, [(x - 25 * sc_, y - 20 * sc_), (x + 25 * sc_, y - 20 * sc_)], DARK, 6 * sc_); line(d, [(x - 25 * sc_, y + 5 * sc_), (x + 25 * sc_, y + 5 * sc_)], DARK, 6 * sc_)
+    sq = 1 + .06 * math.sin(lt * 9)
+    rr(d, (300 - 120 * sq, 340, 300 + 120 * sq, 520), 14, YEL, WHITE, 5); rr(d, (300 - 120 * sq, 340, 300 + 120 * sq, 380), 14, (255, 235, 120))
+    for y in range(350, 520, 22): rr(d, (292, y, 308, y + 11), 3, DARK)
+    txt(d, (300 + 70, 450), "XZ", 52, DARK) if False else txt(d, (300, 455), "XZ", 60, DARK)
+
+def sc_servidor(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 160
+    for r_, x0 in enumerate((50, 220, 390)):
+        hl = r_ == 1
+        rr(d, (x0, 60 + oy, x0 + 160, 400 + oy), 12, (12, 20, 56), YEL if hl else BLUE2, 5 if hl else 3)
+        for i in range(6):
+            y = 78 + oy + i * 53; rr(d, (x0 + 12, y, x0 + 148, y + 42), 6, (22, 36, 96))
+            on = random.Random(int(gt * 4) + r_ * 7 + i).random() > .45
+            circ(d, x0 + 28, y + 21, 6, fill=(BLUE2 if on else (40, 60, 120)))
+            if hl and i == 2: rr(d, (x0 + 50, y + 6, x0 + 138, y + 36), 6, YEL); txt(d, (x0 + 94, y + 21), "XZ", 22, DARK)
+    for i, (lab, c) in enumerate((("BANCOS", BLUE), ("EMPRESAS", RED), ("GOVERNOS", YEL))):
+        b = appear(lt, 1.2 + i * .8)
+        if b > 0: rr(d, (50 + i * 175, 450 + (1 - b) * 100, 215 + i * 175, 520 + (1 - b) * 100), 16, c); txt(d, (132 + i * 175, 485 + (1 - b) * 100), lab, 24, DARK if c == YEL else WHITE)
+
+def sc_porta(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 120
+    rr(d, (140, 50 + oy, 460, 530 + oy), 10, (8, 14, 44), BLUE2, 6)
+    o = eo(ep(lt, 3.0, 3.9))
+    if o > 0:
+        for j in range(5): rr(d, (160 - j * 0, 70 + oy + j * 4, 440, 510 + oy - j * 4), 6, RED + (int(40 + 30 * pulse(gt * 3, 1)),)) if j == 0 else None
+        poly(d, [(170, 80 + oy), (430, 80 + oy), (470, 560 + oy), (130, 560 + oy)], RED + (90,))
+    x1 = 170 + 260 * (1 - .78 * o)
+    poly(d, [(170, 75 + oy), (x1, 75 + oy + 40 * o), (x1, 505 + oy - 40 * o), (170, 505 + oy)], (30, 52, 130), WHITE, 4)
+    if o < .6:
+        kx = 80 + 300 * eo(ep(lt, .4, 1.8)); ky = 300 + oy
+        rot = ep(lt, 2.0, 2.8) * 70
+        circ(d, kx, ky, 26, outline=YEL, w=10); line(d, [(kx + 26, ky), (kx + 130, ky)], YEL, 10); line(d, [(kx + 100, ky), (kx + 100, ky + 22)], YEL, 9); line(d, [(kx + 120, ky), (kx + 120, ky + 16)], YEL, 9)
+    rr(d, (360, 290 + oy, 400, 330 + oy), 8, (14, 22, 60), YEL, 3) if o < .6 else None
+    if o > 0:
+        txt(d, (300, 560), "SEM SENHA", 38, YEL if int(gt * 4) % 2 == 0 else WHITE)
+        if lt < 4.2: fx["flash"] = (RED, int(110 * (1 - ep(lt, 3.0, 4.2))))
+
+def sc_ampulh(im, d, lt, gt, fx):
+    k = appear(lt); sc_ = .8 + .2 * k
+    f = lambda x, y: (300 + (x - 300) * sc_, 300 + (y - 300) * sc_)
+    fr = (lt * .16) % 1
+    poly(d, [f(170, 90), f(430, 90), f(300, 300)], (255, 255, 255, 40), WHITE, 4); poly(d, [f(300, 300), f(170, 510), f(430, 510)], (255, 255, 255, 40), WHITE, 4)
+    yt = 90 + 205 * fr; wt = 130 * (300 - yt) / 210
+    poly(d, [f(300 - wt, yt), f(300 + wt, yt), f(300, 298)], YEL)
+    hb = 205 * fr; yb = 510 - hb; wb = 130 * (yb - 300) / 210
+    if hb > 2: poly(d, [f(300 - wb, yb), f(300 + wb, yb), f(430, 510), f(170, 510)], YEL)
+    line(d, [f(300, 300), f(300, max(305, yb))], YEL, 4)
+    rr(d, (*f(150, 66), *f(450, 94)), 8, BLUE2); rr(d, (*f(150, 506), *f(450, 534)), 8, BLUE2)
+    for i in range(6): txt(d, (300, 580), "• " * (1 + int(lt * 1.5) % 6), 28, BLUE2, mono=True)
+
+def sc_commits(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 160
+    rr(d, (50, 40 + oy, 550, 200 + oy), 20, (12, 22, 66), BLUE2, 4)
+    circ(d, 130, 120 + oy, 44, fill=WHITE, outline=YEL, w=4); circ(d, 114, 112 + oy, 6, fill=DARK); circ(d, 146, 112 + oy, 6, fill=DARK); d.arc(P(110, 118 + oy, 150, 148 + oy), 20, 160, fill=DARK, width=4 * S)
+    txt(d, (330, 98 + oy), "Jia Tan", 38, WHITE); txt(d, (330, 140 + oy), "contribuidor do projeto", 15, BLUE2, mono=True); rr(d, (230, 160 + oy, 440, 188 + oy), 14, YEL); txt(d, (335, 174 + oy), "AJUDANDO ✓" if False else "AJUDANDO", 16, DARK)
+    msgs = ["corrige erro de digitação", "atualiza a documentação", "melhora o desempenho", "ajusta pequenos testes", "corrige um detalhe"]
+    for i, m in enumerate(msgs):
+        b = appear(lt, .7 + i * .75, .35)
+        if b > 0:
+            y = 240 + oy + i * 62
+            rr(d, (60 + (1 - b) * 260, y, 540 + (1 - b) * 260, y + 50), 12, (18, 30, 86), BLUE2, 2)
+            circ(d, 92 + (1 - b) * 260, y + 25, 15, fill=YEL); line(d, [(84 + (1 - b) * 260, y + 25), (90 + (1 - b) * 260, y + 32), (101 + (1 - b) * 260, y + 18)], DARK, 4)
+            txt(d, (122 + (1 - b) * 260, y + 25), m, 20, WHITE, mono=True, anchor="lm")
+    yr = 2021 + int(2 * ep(lt, .5, fx["dur"] * .9))
+    txt(d, (500, 100 + oy), str(yr), 30, YEL, mono=True) if False else None
+
+def sc_confianca(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 160
+    txt(d, (300, 90 + oy), "CONFIANÇA", 50, WHITE)
+    p_ = eo(ep(lt, .4, fx["dur"] * .9))
+    rr(d, (60, 180 + oy, 540, 260 + oy), 40, (8, 14, 44), BLUE2, 4)
+    w_ = 468 * p_; col = tuple(int(RED[i] * (1 - p_) + YEL[i] * p_) for i in range(3))
+    if w_ > 12: rr(d, (66, 186 + oy, 66 + w_, 254 + oy), 34, col)
+    txt(d, (300, 350 + oy), f"{int(p_ * 100)}%", 110, WHITE)
+    for i, y in enumerate((2021, 2022, 2023)):
+        x = 90 + i * 210; circ(d, x, 450 + oy, 10, fill=YEL if p_ > i / 2.5 else (40, 60, 130)); txt(d, (x, 485 + oy), str(y), 22, BLUE2, mono=True)
+    line(d, [(90, 450 + oy), (510, 450 + oy)], BLUE2, 3)
+    for i in range(6):
+        t_ = (lt * .6 + i / 6) % 1; heart(d, 70 + 468 * p_ * ((i * 0.37) % 1), 175 + oy - t_ * 120, 14, RED + (int(255 * (1 - t_)),))
+
+def sc_esgotado(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 200
+    tired_face(d, 300, 220 + oy, 110, gt, slump=4 * math.sin(gt))
+    for i in range(3):
+        t_ = (lt * .5 + i / 3) % 1; txt(d, (450 + i * 25, 150 + oy - t_ * 90), "Z", int(26 + i * 10), YEL + (int(255 * (1 - t_)),))
+    rr(d, (130, 390 + oy, 440, 470 + oy), 12, (8, 14, 44), WHITE, 5); rr(d, (440, 415 + oy, 462, 445 + oy), 4, WHITE)
+    lv = max(.08, .6 - lt * .08); blink = int(gt * 3) % 2 == 0
+    rr(d, (140, 400 + oy, 140 + 290 * lv, 460 + oy), 8, RED if blink or lv > .2 else (120, 20, 30))
+    for i, (lab, c) in enumerate((("SOZINHO", BLUE), ("SEM PAGAMENTO", RED))):
+        b = appear(lt, 1.0 + i * .9)
+        if b > 0: rr(d, (60 + i * 250, 510 + (1 - b) * 90, 290 + i * 250 - (30 if i else 0), 570 + (1 - b) * 90), 14, c); txt(d, (175 + i * 250 - (15 if i else 0), 540 + (1 - b) * 90), lab, 22, WHITE)
+
+def sc_pressao(im, d, lt, gt, fx):
+    tired_face(d, 300, 300, 62, gt)
+    bub = [("CADÊ A ATUALIZAÇÃO?", (30, 40, 360, 105), RED, WHITE, .5), ("ANDA LOGO!", (300, 140, 560, 205), WHITE, DARK, 1.7), ("PRECISA DE NOVO RESPONSÁVEL", (20, 410, 470, 475), YEL, DARK, 3.0), ("ALGUÉM ASSUME!", (260, 500, 580, 565), BLUE, WHITE, 4.3)]
+    for lab, (x0, y0, x1, y1), c, tc, t0 in bub:
+        b = appear(lt, t0, .35)
+        if b > 0:
+            sh = math.sin(lt * 50) * 4 * max(0, 1 - (lt - t0) * 3)
+            cxm, cym = (x0 + x1) / 2, (y0 + y1) / 2; w_, h_ = (x1 - x0) / 2 * b, (y1 - y0) / 2 * b
+            rr(d, (cxm - w_ + sh, cym - h_, cxm + w_ + sh, cym + h_), 22, c); txt(d, (cxm + sh, cym), lab, int(19 * b) + 1, tc)
+            circ(d, x0 + 4 if x0 > 100 else x1 - 4, y1 + 6, 14, fill=DARK, outline=RED, w=3)
+
+def sc_chave(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 120
+    tired_face(d, 110, 330 + oy, 80, gt)
+    sm = alpha_layer(); done = lt > 3.0
+    hacker(sm, 490, 400 + oy, .55, lt, "idle", eyes=RED if done else YEL); im.alpha_composite(sm); d2 = ImageDraw.Draw(im)
+    t_ = eo(ep(lt, 1.0, 3.0)); x = 190 + 230 * t_; y = 330 + oy - 90 * math.sin(t_ * math.pi)
+    ang = t_ * 360 * 1.0
+    circ(d2, x, y, 24, outline=YEL, w=9); line(d2, [(x + 24, y), (x + 100, y)], YEL, 9); line(d2, [(x + 82, y), (x + 82, y + 18)], YEL, 8); line(d2, [(x + 98, y), (x + 98, y + 14)], YEL, 8)
+    if done:
+        b = appear(lt, 3.0, .4); rr(d2, (150, 40 + oy, 450, 110 + oy), 16, YEL if int(gt * 3) % 2 else WHITE); txt(d2, (300, 75 + oy), "PODE PUBLICAR", int(30 * b) + 1, DARK)
+        r = (lt - 3.0) * 400; circ(d2, 490, 400 + oy, r, outline=RED + (int(255 * max(0, 1 - r / 250)),), w=5)
+
+def sc_testes(im, d, lt, gt, fx):
+    k = appear(lt); oy = (1 - k) * 120
+    for i, x0 in enumerate((40, 220, 400)):
+        rr(d, (x0, 70 + oy, x0 + 160, 280 + oy), 12, (14, 24, 70), BLUE2, 3); txt(d, (x0 + 80, 96 + oy), f"teste{i+1}.xz", 18, BLUE2, mono=True)
+        rnd = random.Random(i + int(gt * 5) * 0)
+        for r_ in range(6): txt(d, (x0 + 14, 132 + oy + r_ * 22), "".join(rnd.choice("01") for _ in range(11)), 15, (110, 140, 220), mono=True, anchor="lm")
+    sy = 70 + oy + 210 * ep(lt, 1.0, 2.8)
+    if 1.0 < lt < 2.9: d.rectangle(P(30, sy - 3, 570, sy + 3), fill=YEL)
+    if lt > 2.0:
+        b = appear(lt, 2.0 + .01); rr(d, (230, 150 + oy, 370, 190 + oy), 6, RED); txt(d, (300, 170 + oy), "01100101", 16, WHITE, mono=True)
+    if lt > 3.0: txt(d, (300, 320 + oy), "CÓDIGO ESCONDIDO", 26, RED if int(gt * 4) % 2 == 0 else WHITE)
+    for i, (lab, t0) in enumerate((("5.6.0", 4.2), ("5.6.1", 5.0))):
+        b = appear(lt, t0, .3)
+        if b > 0: rr(d, (80 + i * 240, 360 + oy, 260 + i * 240, 430 + oy), 14, RED if b > .9 else YEL); txt(d, (170 + i * 240, 395 + oy), lab, int(40 * b) + 1, WHITE)
+    for i in range(4):
+        b = appear(lt, 6.4 + i * .35, .3)
+        if b > 0:
+            x0 = 70 + i * 125; rr(d, (x0, 470 + oy, x0 + 100, 560 + oy), 10, (14, 24, 70), RED if int(gt * 3) % 2 else BLUE2, 3); txt(d, (x0 + 50, 515 + oy), "TESTE", int(16 * b) + 1, WHITE, mono=True); circ(d, x0 + 14, 484 + oy, 5, fill=RED)
+
+def sc_mapa(im, d, lt, gt, fx):
+    cx, cy, Rg = 300, 300, 240
+    circ(d, cx, cy, Rg + 6, outline=BLUE2, w=3)
+    for r_ in (80, 160): d.arc(P(cx - Rg, cy - r_ * .5, cx + Rg, cy + r_ * .5), 0, 360, fill=BLUE + (120,), width=2 * S)
+    org = [(250, 300), (380, 250), (310, 380)]
+    R = lt * 38
+    for gx in range(-13, 14):
+        for gy in range(-13, 14):
+            x, y = cx + gx * 18, cy + gy * 18
+            if math.hypot(x - cx, y - cy) > Rg: continue
+            inf = any(math.hypot(x - ox, y - oy_) < R for ox, oy_ in org)
+            circ(d, x, y, 4 if not inf else 5 + 1.5 * pulse(gt * 3 + gx, 1), fill=RED if inf else BLUE2 + (150,))
+    for ox, oy_ in org:
+        r = (lt * 150) % 160; circ(d, ox, oy_, r, outline=RED + (int(220 * (1 - r / 160)),), w=3)
+    txt(d, (300, 570), "MILHÕES DE SERVIDORES", 26, RED if int(gt * 3) % 2 == 0 else WHITE)
+
+def sc_relogio2(im, d, lt, gt, fx):
+    sc_relogio(im, d, lt, gt, fx)
+    rr(d, (210, 384, 390, 442), 10, DARK); txt(d, (300, 413), "0,5 s", 34, YEL if int(gt * 4) % 2 == 0 else RED)
+
+def sc_misterio(im, d, lt, gt, fx):
+    sm = alpha_layer(); hacker(sm, 300, 420, 1.15, lt, "idle", eyes=(40, 40, 60)); im.alpha_composite(sm); d2 = ImageDraw.Draw(im)
+    for i in range(7):
+        t_ = (lt * .35 + i / 7) % 1; x = 90 + (i * 83) % 420; txt(d2, (x, 460 - t_ * 440), "?", int(40 + (i * 13) % 40), BLUE2 + (int(200 * (1 - t_)),))
+    txt(d2, (300, 150), "?", int(150 + 20 * math.sin(gt * 3)), YEL + (200,))
+    b = appear(lt, .8, .5)
+    if b > 0: rr(d2, (30, 60, 200, 190), 10, WHITE); rr(d2, (45, 75, 105, 135), 6, (200, 205, 220)); txt(d2, (75, 105), "?", 46, DARK); txt(d2, (150, 160), "JIA TAN", 18, DARK); line(d2, [(115, 90), (185, 90)], DARK, 4); line(d2, [(115, 110), (170, 110)], DARK, 4)
+    k_ = appear(lt, fx["dur"] * .78, .3)
+    if k_ > 0: stamp(im, "NADA PROVADO", 48, 300, 520, k_, rot=-8, col=RED, w=480, h=96)
+
+def sc_pastas(im, d, lt, gt, fx):
+    for i, (x0, c) in enumerate(((40, BLUE), (210, YEL), (380, RED))):
+        b = appear(lt, .1 + i * .25); oy = (1 - b) * 220
+        rr(d, (x0, 240 + oy, x0 + 90, 262 + oy), 6, c); rr(d, (x0, 252 + oy, x0 + 180, 420 + oy), 12, c)
+        op = ep(lt, 1.0 + i * .3, 1.5 + i * .3)
+        for j in range(3):
+            t_ = (lt * .8 + j / 3 + i * .2) % 1
+            if op > 0: rr(d, (x0 + 30 + j * 25, 230 + oy - t_ * 160, x0 + 90 + j * 25, 290 + oy - t_ * 160), 4, WHITE + (int(255 * (1 - t_)),))
+        txt(d, (x0 + 90, 336 + oy), "SIGILO", 22, DARK if c == YEL else WHITE)
+    sk = appear(lt, 1.8, .3)
+    if sk > 0: stamp(im, "CONFIDENCIAL", 54, 300, 140, sk, rot=-9, col=RED, w=500, h=100)
+    txt(d, (300, 520), "ARQUIVOS ABERTOS", 32, YEL if int(gt * 3) % 2 == 0 else WHITE)
+
+
 SCENE_FN = dict(alvo=sc_alvo, app=sc_app, app2=sc_app2, cadeado=sc_cadeado, entrev=sc_entrev, entrev2=sc_entrev2, malic=sc_malic,
                 codigo=sc_codigo, arquivos=sc_arquivos, relogio=sc_relogio, calend=sc_calend, escudo=sc_escudo, celular=sc_celular,
-                download=sc_download, lupa=sc_lupa, cta=sc_cta)
+                download=sc_download, lupa=sc_lupa, cta=sc_cta, calmar=sc_calmar, login=sc_login, ataque=sc_ataque, engenh=sc_engenh,
+                cpu=sc_cpu, compacta=sc_compacta, servidor=sc_servidor, porta=sc_porta, ampulh=sc_ampulh, commits=sc_commits,
+                confianca=sc_confianca, esgotado=sc_esgotado, pressao=sc_pressao, chave=sc_chave, testes=sc_testes, mapa=sc_mapa,
+                relogio2=sc_relogio2, misterio=sc_misterio, pastas=sc_pastas)
 
 # ---------------------------------------------------------------- texto cinético (pop por palavra)
 FT = bf(52)
@@ -608,26 +879,30 @@ def word_img(w, col):
     return _wc[key]
 
 def layout(words):
-    lines, cur, idx = [[]], 0, 0
+    lines, idx = [[]], 0
     for w, c in words:
         if w == "|": lines.append([]); continue
         lines[-1].append((idx, w.upper(), c, FT.getlength(w.upper()))); idx += 1
     return lines
 
-def draw_text(frame, sc, lt):
-    words = [w for w in sc["words"] if w[0] != "|"]; n = len(words); span = sc["dur"] * .55
-    lines = layout(sc["words"]); y0 = 120; lh = 76; sp = FT.getlength(" ")
+def draw_text(frame, sc, gt):
+    chs = sc["chunks"]; ch = [c for c in chs if c["start"] <= gt + 1e-6][-1] if gt >= chs[0]["start"] else chs[0]
+    lt = gt - ch["start"]
+    words = [w for w in ch["words"] if w[0] != "|"]; n = max(1, len(words)); span = min(ch["dur"] * .5, 1.0)
+    lines = layout(ch["words"]); sp = FT.getlength(" ")
+    widths = [sum(x[3] for x in ln) + sp * max(0, len(ln) - 1) for ln in lines]
+    fs = min(1.0, 650 / max(widths)); lh = 76 * fs; y0 = 125
     for li, ln in enumerate(lines):
-        tw = sum(x[3] for x in ln) + sp * (len(ln) - 1); x = (W - tw) / 2
+        tw = widths[li] * fs; x = (W - tw) / 2
         for (i, w, c, wl) in ln:
-            k = (lt - (.08 + span * i / n)) / .16
+            k = (lt - (.04 + span * i / n)) / .16
             if k > 0:
-                im = word_img(w, c); s = .45 + .55 * bk(k) if k < 1 else 1.0
-                if k < 1 and s != 1:
-                    im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BILINEAR)
-                im = im.copy(); im.putalpha(im.split()[3].point(lambda v: int(v * min(1, k * 1.8))))
-                frame.alpha_composite(im, (int(x + wl / 2 + 8 - im.width / 2), int(y0 + li * lh + 36 - im.height / 2 + (1 - cl(k)) * -18)))
-            x += wl + sp
+                im = word_img(w, c); s_ = (.45 + .55 * bk(k) if k < 1 else 1.0) * fs
+                if s_ != 1: im = im.resize((max(1, int(im.width * s_)), max(1, int(im.height * s_))), Image.BILINEAR)
+                else: im = im.copy()
+                im.putalpha(im.split()[3].point(lambda v: int(v * min(1, k * 1.8))))
+                frame.alpha_composite(im, (int(x + wl * fs / 2 + 8 * fs - im.width / 2), int(y0 + li * lh + 36 * fs - im.height / 2 + (1 - cl(k)) * -18)))
+            x += (wl + sp) * fs
 
 # ---------------------------------------------------------------- HUD e pós-processamento
 HF = mf(17)
@@ -664,14 +939,14 @@ def render_frame(f):
     while si < len(timeline) - 1 and gt >= timeline[si + 1]["start"]: si += 1
     sc = timeline[si]; lt = gt - sc["start"]; slt = lt * sc["speed"]
     frame = BG.copy(); frame.alpha_composite(grid_layer(gt)); frame.alpha_composite(particles(gt))
-    fx = dict(bolts=[], flash=None)
+    fx = dict(bolts=[], flash=None, dur=sc["dur"])
     stage = alpha_layer(); sd = ImageDraw.Draw(stage)
     SCENE_FN[sc["kind"]](stage, sd, slt, gt, fx)
     ent = .9 + .1 * bk(lt / .35)
     size = int(SSZ * ent); stg = stage.resize((size, size), Image.BILINEAR)
     frame.alpha_composite(stg, (SX + (SSZ - size) // 2, SY + (SSZ - size) // 2))
     draw_bolts(frame, fx["bolts"])
-    draw_text(frame, sc, lt)
+    draw_text(frame, sc, gt)
     frame = camera(frame, sc, lt, gt, slt)
     frame.alpha_composite(VIGL); frame.alpha_composite(SCAN)
     if fx["flash"] and fx["flash"][1] > 0:
@@ -697,15 +972,6 @@ def main():
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", os.path.join(OUT, "operacao-sigilo-SEM-AUDIO.mp4"), "-i", aud,
                         "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest",
                         os.path.join(OUT, "operacao-sigilo-COM-AUDIO.mp4")], check=True)
-    L = ["# ROTEIRO DE ÁUDIO – OPERAÇÃO SIGILO (voz: Elena)", "",
-         f"Duração alvo: {int(TOTAL // 60)}min{int(TOTAL % 60):02d}s  |  Tom firme, ritmo de notícia urgente", "",
-         "Leia cada bloco dentro da janela de tempo indicada. Pausas (...) = respiro de ~0,4 s.", ""]
-    for i, s in enumerate(timeline, 1):
-        clean = s["text"].replace("*", "").replace("_", "").replace(" | ", " ")
-        L += [f"## Cena {i}  [{s['start']:04.1f}s → {s['start'] + s['dur']:04.1f}s]", clean, ""]
-    open(os.path.join(OUT, "roteiro-elena-v4.md"), "w", encoding="utf-8").write("\n".join(L))
-    json.dump([dict(cena=i + 1, inicio=round(s["start"], 2), fim=round(s["start"] + s["dur"], 2), texto=s["text"].replace("*", "").replace("_", "").replace(" | ", " ")) for i, s in enumerate(timeline)],
-              open(os.path.join(OUT, "tempos.json"), "w"), ensure_ascii=False, indent=1)
     print("ok", round(TOTAL, 1), "s")
 
 if __name__ == "__main__":
