@@ -1,4 +1,4 @@
-# ROTEIRO V5 – OPERAÇÃO SIGILO (voz: Elena)
+# ROTEIRO V5 – OPERAÇÃO SIGILO (voz: Augusto)
 Tema: o ataque hacker que foi descoberto por meio segundo de atraso (caso XZ Utils, 2024)
 Duração estimada: ~2 minutos
 
